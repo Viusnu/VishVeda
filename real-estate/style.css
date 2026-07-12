@@ -1,0 +1,487 @@
+/* ==========================================
+   1. GLOBAL RESETS & GENERAL BODY SETTINGS
+   ========================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgba(186, 202, 240, 0.85); /* Matches your light blue main website background */
+    font-family: 'Offside', sans-serif;
+    overflow-x: hidden;
+    height: 100%;
+}
+
+/* ==========================================
+   2. CUSTOM MOUSE CURSOR SETTINGS
+   ========================================== */
+#custom-cursor {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+/* ==========================================
+   3. HERO BANNER & BACKGROUND CONTAINER
+   ========================================== */
+.hero-section {
+    position: relative;
+    width: 100%;
+    height: 450px; /* Locks banner height so it never goes overboard */
+    overflow: hidden;
+}
+
+/* Background image stretches cleanly behind everything */
+.real-estate-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+/* Stretches structural container over image face */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(7px); /* Adds a subtle blur effect to the background */
+}
+
+/* ==========================================
+   4. TRANSPARENT NAVIGATION HEADER
+   ========================================== */
+.navbar {
+    width: 100%;
+    background: transparent !important;
+    background-color: transparent !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+}
+
+/* Strips out background boxes around logo branding text */
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  padding-left: 10px;
+  /* Force top left placement */
+  position: fixed;
+  top: 20px;       /* Space from top edge */
+  left: 25px;      /* Space from left edge */
+  z-index: 1000;
+  background-color: rgb(93, 81, 197);
+  border-radius: 0px;
+  width: 170px;
+  height: 45px;
+  white-space: nowrap;
+  /* Keeps logo above other elements */
+}
+
+.logo-link {
+    display: inline-block;
+    background: transparent !important;
+}
+
+.nav-logo-img {
+    height: 45px; /* Adjust height of logo graphic badge */
+    width: auto;
+    object-fit: contain;
+    filter: brightness(0.5); /* Dims the actual image to 50% luminance */
+}
+
+
+/* ==========================================
+   5. CENTRAL TITLES (HERO TEXT)
+   ========================================== */
+
+.hero-description {
+    color: #ffffff;
+    font-family: 'Offside', sans-serif;
+    font-size: 1.2rem;
+    text-align: center;
+    letter-spacing: 1px;
+    margin-bottom: 45px; /* Adds spacing between description and subtitle */
+}
+
+.hero-subtitle {
+    color: #ffffff;
+    font-family: 'Offside', sans-serif;
+    font-size: 1.5rem;
+    text-align: center;
+    letter-spacing: 1px;
+    margin-bottom: 10px; /* Adds spacing between subtitle and main title */
+}
+
+.hero-text {
+    color: #ffffff;
+    font-family: 'Offside', sans-serif;
+    font-size: 3.5rem;
+    text-align: center;
+    letter-spacing: 2px;
+    margin: auto 0; /* Keeps title anchored vertically within remaining viewport space */
+}
+
+/* ==========================================
+   6. BREADCRUMBS BAR (BELOW THE IMAGE)
+   ========================================== */
+.bread-crumb {
+    width: 100%;
+    padding: 20px 20px;
+    display: flex;
+    background-color: transparent; /* Seamlessly blends layout block into body background color */
+}
+
+.bread-crumbs {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+}
+
+.bread-crumbs li {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.bread-crumbs li a {
+    color: #333;
+    text-decoration: none; 
+}
+
+.bread-crumbs li.separator {
+    color: rgb(93, 81, 197); 
+    font-weight: 400;
+    opacity: 0.7;
+}
+
+/* ==========================================
+   7. RESPONSIVE DESIGN ADJUSTMENTS (MOBILE)
+   ========================================== */
+@media (max-width: 768px) {
+    .hero-section {
+        height: 320px; /* Scales down image block frame on smaller screens */
+    }
+    
+    .navbar {
+        padding: 15px 20px;
+    }
+    
+    .logo {
+        font-size: 1.2rem;
+    }
+    
+    .nav-logo-img {
+        height: 35px;
+    }
+    
+    .hero-text {
+        font-size: 2.2rem; /* Shrinks fonts on mobile screens so it fits single lines */
+    }
+}
+
+/* THE CONTAINER: Now handles its own horizontal centering on the webpage */
+/* Core wrapper to handle the overlay alignment safely */
+.search-wrapper-container {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  margin: 40px auto;
+  z-index: 10;
+}
+
+/* Beautiful, properly-spaced search bar matching your tokens */
+.search-container { 
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.search-icon {
+  position: absolute;
+  left: 16px;
+  font-size: 22px;
+  color: #64748b;
+  pointer-events: none;
+}
+
+.search-input {
+  font-family: 'Offside', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #1e293b;
+  width: 100%;
+  padding: 16px 20px 16px 52px; 
+  background-color: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 22px;
+  outline: none;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+  transition: all 0.2s ease;
+}
+
+.search-input:focus {
+  border-color: rgb(93, 81, 197);
+}
+
+/* The Custom Dropdown Panel Overlay */
+.search-dropdown-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.15), 0 8px 10px -6px rgba(15, 23, 42, 0.1);
+  border: 1px solid #f1f5f9;
+  box-sizing: border-box;
+  padding: 20px;
+  display: none; /* Controlled interactively via JS */
+  transform-origin: top;
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: scaleY(0.95); }
+  to { opacity: 1; transform: scaleY(1); }
+}
+
+.dropdown-section {
+  margin-bottom: 18px;
+}
+.dropdown-section:last-child {
+  margin-bottom: 0;
+}
+
+.section-title {
+  font-family: 'Offside', sans-serif;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #94a3b8;
+  margin-bottom: 10px;
+}
+
+/* Interactive Category Tags */
+.tag-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-tag {
+  font-family: 'Offside', sans-serif;
+  font-size: 0.85rem;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.filter-tag:hover {
+  background-color: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.filter-tag.active {
+  background-color: rgb(93, 81, 197);
+  border-color: rgb(93, 81, 197);
+  color: #ffffff;
+}
+
+/* Trending Items List */
+.trending-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.trending-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 8px;
+  font-family: sans-serif;
+  font-size: 0.95rem;
+  color: #334155;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.15s ease;
+}
+
+.trending-item .material-icons {
+  font-size: 18px;
+  color: rgb(93, 81, 197);
+}
+
+.trending-item:hover {
+  background-color: #f8fafc;
+  color: rgb(93, 81, 197);
+}
+/* INTERACTION STATES: High utility polish when interacting with the bar */
+.search-input:focus {
+  border-color: rgb(93, 81, 197);
+  box-shadow: 0 0 0 3px rgba(93, 81, 197, 0.2); /* Soft glow matching your color */
+  outline: none; /* Removes the browser's default highlight ring */
+}
+
+.grid-text-container {
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.grid-title {
+  font-family: 'Offside', sans-serif;
+  font-size: 2rem;
+  color: rgb(93, 81, 197); /* Matches your breadcrumb blue for visual consistency */
+  margin-top: -4px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 20px;
+  padding: 0 20px;
+  margin-top: 28px; /* Adds spacing below the grid for better visual separation */
+}
+
+.grid-item {
+  background-color: #ffffff;
+  border-radius: 0px;
+  height: 60vh;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Adds a subtle blur effect to the background */
+  
+  /* Splits card: 70% height for image box, rest for text */
+  display: grid;
+  grid-template-rows: 70% 1fr; 
+    box-shadow: 
+    0 4px 6px -1px rgba(15, 23, 42, 0.15),
+    0 10px 15px -3px rgba(15, 23, 42, 0.10),
+    0 20px 25px -5px rgba(15, 23, 42, 0.06);
+}
+
+/* Acts as a static frame that cuts off the zoom overflow */
+.image-container {
+  width: 100%;
+  height: 85%;
+  overflow: hidden; 
+}
+
+/* Fills the frame perfectly */
+.property-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;    
+  display: block;       
+  transition: transform 0.3s ease;
+}
+
+/* Scales only the image inside the frame when the card is hovered */
+.grid-item:hover .property-image {
+  transform: scale(1.1);
+}
+
+.property-title {
+  font-family: 'Offside', sans-serif;
+  font-size: 1.5rem;
+  color: rgb(93, 81, 197);
+  margin: 10px 10px 5px 10px;
+  margin-top: -40px;
+}
+
+.property-description {
+  font-family: 'Offside', sans-serif;
+  font-size: 1rem; /* Slightly lower size looks cleaner for multi-line description */
+  color: #333;
+  margin: 0 10px 10px 10px;
+  margin-top: -31%;
+}
+
+.property-price {
+  font-family: 'Offside', sans-serif;
+  font-size: 1.2rem;
+  color: #1a1a1a;
+  font-weight: bold;
+  margin: 0 10px 10px 10px;
+  margin-top: -18%;
+}
+
+.buy-button {
+  display: inline-block;
+  background-color: rgb(93, 81, 197);
+  color: #ffffff;
+  font-family: 'Offside', sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: -50px;
+}
+
+@media screen and (max-width: 768px) {
+  .logo {
+    font-size: 1.2rem;
+    padding-left: 5px;
+  }
+  bread-crumbs li a {
+    font-size: 0.9rem;
+    margin-right: 5px;
+  }
+}
+
+
+.custom-cursor-highlight {
+    width: 20px;
+    height: 20px;
+    background-color: rgba(93, 81, 197, 0.65); 
+    border-radius: 50%;                         
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none; 
+    z-index: 9999999;     
+
+    /* Center alignment offset correction */
+    transform: translate(-50%, -50%) scale(1);
+
+    /* Ultra fluid velocity interpolation profile */
+    transition:
+        transform 0.15s cubic-bezier(0.215, 0.61, 0.355, 1),
+        background-color 0.3s ease,
+        border-color 0.3s ease;
+
+    will-change: transform;
+}
+
+/* GROWING SCALE STATE */
+.custom-cursor-highlight.grow {
+    transform: translate(-50%, -50%) scale(2.8); 
+    background-color: rgba(93, 81, 197, 0.65);  
+}

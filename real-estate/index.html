@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate | VishVeda</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Offside&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script>
+        (function() { 
+            var ua = navigator.userAgent; 
+            if (ua.match(/Mocor|Opera\ Mini|bot|crawler|spider|scraper/i)) { 
+                window.location.replace("/unsupported.html"); 
+            } 
+        })();
+    </script>
+</head>
+<body>
+    <div id="custom-cursor" class="custom-cursor-highlight"></div>
+    
+    <header class="hero-section">
+        <img src="../istockphoto-1456147420-612x612.jpg" class="real-estate-image" alt="Real Estate Background">
+        <div class="hero-overlay">
+            <nav class="navbar">
+                <div class="logo">VishVeda Group</div>
+                <a href="../index.html">
+                    <img src="../logo.png" alt="VishVeda Logo" class="nav-logo-img">
+                </a>
+            </nav>
+            <h2 class="hero-subtitle">Real Estate</h2>
+            <h1 class="hero-text">The Foundation of Your Next Move</h1>
+            <p class="hero-description">Discover the perfect property for your next adventure.</p>
+        </div>
+    </header>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const cursor = document.querySelector('.custom-cursor-highlight');
+    
+    // Safety check in case the element does not exist on the page
+    if (!cursor) return;
+
+    // 1. Track mouse movement
+    window.addEventListener('mousemove', (e) => {
+        // Use clientX and clientY because your CSS uses position: fixed
+        cursor.style.left = `${e.clientX}px`;
+        cursor.style.top = `${e.clientY}px`;
+    });
+
+    // 2. Select elements that trigger the grow effect
+    const interactiveElements = document.querySelectorAll('a, button, input, select, textarea, [role="button"]');
+
+    // 3. Add hover listeners to trigger the transition
+    interactiveElements.forEach(element => {
+        element.addEventListener('mouseenter', () => {
+            cursor.classList.add('grow');
+        });
+        
+        element.addEventListener('mouseleave', () => {
+            cursor.classList.remove('grow');
+        });
+    });
+});
+</script>
+    <div class="bread-crumb">
+        <ul class="bread-crumbs">
+             <li><a href="../index.html">Home</a></li>
+             <li class="separator">/</li>
+             <li><a>Real Estate</a></li>
+         </ul>
+    </div>
+
+   <!-- Search Container with Dropdown Filter -->
+  <!-- Beautiful, Interactive Custom Search Component -->
+    <div class="search-wrapper-container">
+        <div class="search-container">
+            <span class="material-icons search-icon">search</span>
+            <input type="text" id="search-input" placeholder="Search properties..." class="search-input" autocomplete="off">
+        </div>
+        
+        <!-- Modern Smart Dropdown Panel -->
+        <div class="search-dropdown-panel" id="search-dropdown">
+            <div class="dropdown-section">
+                <div class="section-title">Property Types</div>
+                <div class="tag-group">
+                    <button class="filter-tag active" data-type="all">All Properties</button>
+                    <button class="filter-tag" data-type="villa">Villas</button>
+                    <button class="filter-tag" data-type="apartment">Apartments</button>
+                    <button class="filter-tag" data-type="house">Houses</button>
+                </div>
+            </div>
+            <div class="dropdown-section">
+                <div class="section-title">⚡ Trending Searches</div>
+                <ul class="trending-list">
+                    <li class="trending-item"><span class="material-icons">trending_up</span> Beverly Hills</li>
+                    <li class="trending-item"><span class="material-icons">trending_up</span> Beachfront</li>
+                    <li class="trending-item"><span class="material-icons">trending_up</span> Penthouse Loft</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-text-container">
+        <h2 class="grid-title">Featured Properties</h2>
+    </div>
+
+    <div class="grid-container" id="property-grid"></div>
+
+    <script>
+        // Catalog expanded to 9 listings to stay clean in multiples of 3
+     // 1. Internal properties catalog matching your layout rules perfectly (Multiples of 3)
+const properties = [
+    {
+        title: "Luxury Villa in Beverly Hills",
+        desc: "A stunning villa with breathtaking views and modern amenities.",
+        price: "₹5,00,000",
+        type: "villa",
+        img: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=2400"
+    },
+    {
+        title: "Modern Apartment in New York",
+        desc: "A sleek apartment located in the heart of the city with all conveniences.",
+        price: "₹3,00,000",
+        type: "apartment",
+        img: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?q=80&w=2400"
+    },
+    {
+        title: "Beachfront House in Miami",
+        desc: "Enjoy the sun and sand in this beautiful beachfront property.",
+        price: "₹4,00,000",
+        type: "house",
+        img: "https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?q=80&w=2400"
+    },
+    {
+        title: "Contemporary Villa in Santorini",
+        desc: "Beautiful cave architecture with cliffside sunset views over the blue ocean.",
+        price: "₹7,20,000",
+        type: "villa",
+        img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2400"
+    },
+    {
+        title: "Penthouse Apartment in Tokyo",
+        desc: "A sprawling glass penthouse overlooking the skyline of Shinjuku district.",
+        price: "₹6,10,000",
+        type: "apartment",
+        img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=2400"
+    },
+    {
+        title: "A-Frame Country House in Aspen",
+        desc: "Cozy timber frame construction nestled inside a private pine forest retreat.",
+        price: "₹3,80,000",
+        type: "house",
+        img: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=2400"
+    },
+    {
+        title: "Tuscan Vineyard Estate",
+        desc: "Classic old-world Italian villa surrounded by pristine cypress trees and rolling hills.",
+        price: "₹9,50,000",
+        type: "villa",
+        img: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2400"
+    },
+    {
+        title: "Industrial Loft in London",
+        desc: "Exposed brick walls, massive factory windows, and modern open floor architectural planning.",
+        price: "₹4,20,000",
+        type: "apartment",
+        img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=2400"
+    },
+    {
+        title: "Eco-Friendly House in Portland",
+        desc: "Sustainable wood design running entirely on solar arrays with an organic greenhouse garden.",
+        price: "₹3,10,000",
+        type: "house",
+        img: "https://images.unsplash.com/photo-1513584684374-8bab748fbf90?q=80&w=2400"
+    }
+];
+
+// 2. DOM Elements Selection
+const grid = document.getElementById('property-grid');
+const searchInput = document.getElementById('search-input');
+const searchDropdown = document.getElementById('search-dropdown');
+const tags = document.querySelectorAll('.filter-tag');
+const trendingItems = document.querySelectorAll('.trending-item');
+
+let activeType = 'all';
+
+// 3. Render function: Outputs structured cards and fills out 3-by-3 row empty spots
+function renderProperties(filteredList) {
+    grid.innerHTML = '';
+    
+    if (filteredList.length === 0) {
+        grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #777; padding: 40px; font-size: 1.1rem; font-family: 'Offside', sans-serif;">No properties match your selection.</p>`;
+        return;
+    }
+
+    filteredList.forEach(prop => {
+        grid.innerHTML += `
+            <div class="grid-item">
+                <div class="image-container">
+                    <img src="${prop.img}" alt="${prop.title}" class="property-image">
+                </div>
+                <h3 class="property-title">${prop.title}</h3>
+                <p class="property-description">${prop.desc}</p>  
+                <p class="property-price">${prop.price}</p>
+                <button class="buy-button">Buy Now</button>
+            </div>
+        `;
+    });
+
+    // Enforces strict 3-by-3 layout filling grid gaps transparently
+    const leftovers = filteredList.length % 3;
+    if (leftovers !== 0) {
+        const placeholdersNeeded = 3 - leftovers;
+        for (let i = 0; i < placeholdersNeeded; i++) {
+            grid.innerHTML += `<div class="grid-item grid-placeholder"></div>`;
+        }
+    }
+}
+
+// 4. Single Unified Search & Type Filter Logic
+function filterProperties() {
+    const query = searchInput.value.toLowerCase().trim();
+
+    const filtered = properties.filter(prop => {
+        const matchesSearch = prop.title.toLowerCase().includes(query) || prop.desc.toLowerCase().includes(query);
+        const matchesType = activeType === 'all' || prop.type === activeType;
+        return matchesSearch && matchesType;
+    });
+
+    renderProperties(filtered);
+}
+
+// 5. Interactive UI Listeners & Dropdown Actions
+searchInput.addEventListener('input', filterProperties);
+
+// Show dropdown menu when clicking or focusing on search input bar
+searchInput.addEventListener('focus', () => {
+    searchDropdown.style.display = 'block';
+});
+
+// Close search dropdown panel clean when clicking out of the viewport box area
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.search-wrapper-container')) {
+        searchDropdown.style.display = 'none';
+    }
+});
+
+// Modern tab selection handling
+tags.forEach(tag => {
+    tag.addEventListener('click', () => {
+        tags.forEach(t => t.classList.remove('active'));
+        tag.classList.add('active');
+        activeType = tag.getAttribute('data-type');
+        filterProperties();
+    });
+});
+
+// Trending items direct query conversion click routing 
+trendingItems.forEach(item => {
+    item.addEventListener('click', () => {
+        // Strip out the inline trending icon text safely 
+        const text = item.textContent.replace('trending_up', '').trim();
+        searchInput.value = text;
+        filterProperties();
+        searchDropdown.style.display = 'none'; 
+    });
+});
+
+// 6. Bootstrap Application Load
+renderProperties(properties);
+    </script>
+</body>
+</html>

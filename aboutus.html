@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VishVeda</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Offside&display=swap" rel="stylesheet">
+    <meta name="google-signin-client_id" content="738928870246-bqa81765ufp1oh0ad19buandk2r7m49b.apps.googleusercontent.com">
+    <script src="https://accounts.google.com/gsi/client" async defer onload="initializeGoogle()"></script>
+    
+</head>
+<body>
+  <div class="dropdown" id="dropdown">
+    <button id="dropdownToggle" class="dropdown-toggle">Sign In</button>
+    <div id="dropdownMenu" class="dropdown-menu">
+      <div id="g_id_signin"></div>
+    </div>
+  </div>
+    <nav class="navbar">
+        <a href="index.html">VishVeda</a></h4>
+        <span id="sidebar-button" class="material-icons-round" class="menu">
+            menu
+        </span>
+    </nav>
+    <div class="container">
+        <h1>About Us</h1>
+        <p>Welcome to VishVeda!, We do Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,</p>
+    </div>
+    <div class="sidebar" id="sidebar">
+        <button class="close-btn" aria-label="Close Sidebar">X</button>
+        <form action="#">
+            <div class="sidebar-menu">
+                <a href="index.html" class="h1">Official Site</a>
+                <a href="#" class="h3">Sevices</a>
+                <a href="#" class="h5">Reach Out</a>
+            </div>
+        </div>
+    </form>
+</div>
+ <script>
+    document.addEventListener('DOMContentLoaded', () => {
+const sidebarButton = document.getElementById('sidebar-button');
+const sidebar = document.getElementById('sidebar');
+
+// Toggle sidebar visibility when the button is clicked
+sidebarButton.addEventListener('click', (event) => {
+    event.stopPropagation(); // Prevent click from propagating to the document
+    sidebar.classList.toggle('visible'); // Toggle the 'visible' class
+});
+
+// Close the sidebar if clicked outside
+document.addEventListener('click', (event) => {
+    if (!sidebar.contains(event.target) && !sidebarButton.contains(event.target)) {
+        sidebar.classList.remove('visible'); // Remove the 'visible' class
+    }
+});
+});
+document.addEventListener('DOMContentLoaded', () => {
+const sidebarButton = document.getElementById('sidebar-button'); // Menu button
+const sidebar = document.getElementById('sidebar'); // Sidebar element
+const closeButton = document.querySelector('.close-btn'); // Close button
+
+// Toggle sidebar visibility when the menu button is clicked
+sidebarButton.addEventListener('click', (event) => {
+    event.stopPropagation(); // Prevent click from propagating to the document
+    sidebar.classList.add('visible'); // Add the 'visible' class to show the sidebar
+});
+
+// Close the sidebar when the close button is clicked
+closeButton.addEventListener('click', (event) => {
+    event.preventDefault(); // Prevent default behavior (if it's an anchor tag)
+    sidebar.classList.remove('visible'); // Remove the 'visible' class to hide the sidebar
+});
+
+// Close the sidebar if clicked outside
+document.addEventListener('click', (event) => {
+    if (!sidebar.contains(event.target) && !sidebarButton.contains(event.target)) {
+        sidebar.classList.remove('visible'); // Remove the 'visible' class
+    }
+});
+});
+window.onload = function () {
+const sidebarButton = document.getElementById('sidebar-button');
+const sidebar = document.getElementById('sidebar');
+const closeButton = document.querySelector('.close-btn');
+
+// Toggle sidebar visibility when the menu button is clicked
+sidebarButton.onclick = function (event) {
+    event.stopPropagation(); // Prevent click from propagating to the document
+    sidebar.classList.add('visible'); // Add the 'visible' class to show the sidebar
+};
+
+// Close the sidebar when the close button is clicked
+closeButton.onclick = function (event) {
+    event.preventDefault(); // Prevent default behavior (if it's an anchor tag)
+    sidebar.classList.remove('visible'); // Remove the 'visible' class to hide the sidebar
+};
+
+// Close the sidebar if clicked outside
+document.onclick = function (event) {
+    if (!sidebar.contains(event.target) && !sidebarButton.contains(event.target)) {
+        sidebar.classList.remove('visible'); // Remove the 'visible' class
+    }
+};
+};
+// removed unused sign-in-container listener; behaviour handled by initializeGoogle
+</script>
+
+<!-- google sign-in support -->
+<script>
+let dropdown, dropdownToggle, dropdownMenu;
+
+function decodeJWT(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(c =>
+      '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+    ).join(''));
+    return JSON.parse(jsonPayload);
+}
+
+function handleCredentialResponse(response) {
+    const user = decodeJWT(response.credential);
+    localStorage.setItem('google_jwt_token', response.credential);
+    updateUIToSignedIn(user);
+}
+
+function updateUIToSignedIn(user) {
+    dropdownToggle.innerHTML = `${user.picture ? `<img src="${user.picture}" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 40px;">` : ''}`;
+    dropdownMenu.innerHTML = `
+      <div class="profile-info">
+          <img src="${user.picture}" style="width: 60px; height: auto; border-radius: 50%;">
+        <name>Welcome, ${user.name}</name>
+        <small>${user.email}</small>
+      </div>
+      <button class="dropdown-item" id="logoutBtn">Log Out</button>
+    `;
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('google_jwt_token');
+      resetUIToSignedOut();
+    });
+}
+
+function resetUIToSignedOut() {
+    dropdownToggle.innerHTML = "Sign In";
+    dropdownMenu.innerHTML = `<div id="g_id_signin"></div>`;
+    google.accounts.id.renderButton(document.getElementById("g_id_signin"), {
+      theme: "outline",
+      size: "large",
+      width: "100%",
+    });
+}
+
+function initializeGoogle() {
+    dropdown = document.getElementById('dropdown');
+    dropdownToggle = document.getElementById('dropdownToggle');
+    dropdownMenu = document.getElementById('dropdownMenu');
+
+    if (dropdownToggle) {
+      dropdownToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdown.classList.toggle('show');
+      });
+    }
+
+    google.accounts.id.initialize({
+      client_id: '738928870246-bqa81765ufp1oh0ad19buandk2r7m49b.apps.googleusercontent.com',
+      callback: handleCredentialResponse,
+      ux_mode: 'popup',
+    });
+
+    const token = localStorage.getItem('google_jwt_token');
+    if (token) {
+      try {
+        const user = decodeJWT(token);
+        updateUIToSignedIn(user);
+      } catch {
+        localStorage.removeItem('google_jwt_token');
+        resetUIToSignedOut();
+      }
+    } else {
+      resetUIToSignedOut();
+    }
+}
+</script>

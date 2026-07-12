@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mining | VishVeda</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Offside&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script>
+        // Security block check 
+        (function() { 
+            var ua = navigator.userAgent; 
+            if (ua.match(/Mocor|Opera\ Mini|bot|crawler|spider|scraper/i)) { 
+                window.location.replace("/unsupported.html"); 
+            } 
+        })();
+    </script>
+</head>
+<body>
+     <div id="custom-cursor" class="custom-cursor-highlight"></div>
+<script>
+      document.addEventListener('DOMContentLoaded', () => {
+    const cursor = document.querySelector('.custom-cursor-highlight');
+    
+    // Safety check in case the element does not exist on the page
+    if (!cursor) return;
+
+    // 1. Track mouse movement
+    window.addEventListener('mousemove', (e) => {
+        // Use clientX and clientY because your CSS uses position: fixed
+        cursor.style.left = `${e.clientX}px`;
+        cursor.style.top = `${e.clientY}px`;
+    });
+
+    // 2. Select elements that trigger the grow effect
+    const interactiveElements = document.querySelectorAll('a, button, input, select, textarea, [role="button"]');
+
+    // 3. Add hover listeners to trigger the transition
+    interactiveElements.forEach(element => {
+        element.addEventListener('mouseenter', () => {
+            cursor.classList.add('grow');
+        });
+        
+        element.addEventListener('mouseleave', () => {
+            cursor.classList.remove('grow');
+        });
+    });
+});
+
+</script>
+    <header class="hero-section">
+        <img src="../istockphoto-143918313-612x612.jpg" class="mining-image" alt="Hero Image">
+        <div class="hero-overlay">
+        <nav class="navbar">
+            <div class="logo">VishVeda Group</div>
+        </nav>
+       <h2 class="hero-subtitle">Mining</h2>
+            <h1 class="hero-text">Resources for a New Era</h1>
+            <p class="hero-description">Building the infrastructure of tomorrow from the ground up</p>
+        </div>
+    </header>
+        <div class="bread-crumb">
+        <ul class="bread-crumbs">
+             <li><a href="../index.html">Home</a></li>
+             <li class="separator">/</li>
+             <li><a>Mining</a></li>
+         </ul>
+    </div>
+</body>
+</html>

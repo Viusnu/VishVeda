@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VishVeda</title>
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Offside&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta name="robots" content="noindex">
+    <script>
+        (function() { 
+            var ua = navigator.userAgent; 
+            if (ua.match(/Mocor|Opera\ Mini|bot|crawler|spider|scraper/i)) { 
+                window.location.replace("/unsupported.html"); 
+            } 
+        })();
+    </script>
+</head>
+<body>
+    <div class="offline-screen hidden" id="offlineScreen" aria-live="polite">
+        <div class="offline-card">
+            <div class="offline-icon">
+                <span class="material-icons">wifi_off</span>
+            </div>
+            <h2>Wi-Fi is not connected</h2>
+            <p>Your connection has been interrupted. Please reconnect to continue browsing.</p>
+            <button class="offline-retry" id="offlineRetryBtn" type="button">Try again</button>
+        </div>
+    </div>
+
+    <div id="custom-cursor" class="custom-cursor-highlight"></div>
+    <header>
+        <div class="banner" id="Banner">
+            <p data-en="VishVeda Group is under creation, coming soon! website under development" data-es="El grupo VishVeda aún no existe, ¡próximamente!, sitio web en desarrollo" data-fr="Le groupe VishVeda n'existe pas encore, bientôt disponible!, site web en développement"></p>
+        </div>
+
+        <nav class="navbar">
+            <div class="logo" data-en="VishVeda Group" data-es="Grupo VishVeda" data-fr="Groupe VishVeda" data-de="VishVeda Gruppe" data-ja="VishVedaグループ" data-pt="Grupo VishVeda">VishVeda Group</div>
+
+            <button class="menu-toggle" id="menuToggle">
+                <span class="material-icons">menu</span>
+            </button>
+
+            <!-- All menu list items live inside this SINGLE <ul> wrapper -->
+            <ul id="navLinks" class="nav-links">
+                <li><a href="home" data-en="Home" data-es="Inicio" data-fr="Accueil">Home</a></li>
+<li><a href="about" data-en="About" data-es="Conózcanos" data-fr="À Propos">About</a></li>
+<li><a href="services" data-en="Services" data-es="Servicios" data-fr="Services">Services</a></li>
+<li><a href="blog" data-en="Blog" data-es="Blog" data-fr="Blog">Blog</a></li>
+<li><a href="contact" data-en="Contact" data-es="Contacto" data-fr="Contact">Contact</a></li>
+
+                </div>
+                    <button class="search" id="searchTriggerBtn" type="button" aria-label="Open search">
+                        <span class="material-icons">search</span>
+                        <span class="search-label">Search</span>
+                    </button>
+                </li>
+                <li>
+                   <button id="dark-mode-toggle" onclick="toggleDarkMode()" aria-label="Toggle theme">
+  <span class="theme-toggle-content" aria-live="polite">
+    <!-- Light Mode State -->
+    <span class="theme-state state-light">
+      <span class="material-icons" aria-hidden="true">light_mode</span>
+      <span class="theme-label">Light</span>
+    </span>
+    <!-- Dark Mode State -->
+    <span class="theme-state state-dark">
+      <span class="material-icons" aria-hidden="true">dark_mode</span>
+      <span class="theme-label">Dark</span>
+    </span>
+  </span>
+</button>
+
+                </li>
+                <li>
+                    <div class="language-dropdown" id="language-dropdown">
+                        <button class="language-dropdown-toggle" id="language-dropdown-toggle" type="button" aria-haspopup="listbox" aria-expanded="false">
+                            <span class="language-dropdown-label">🇺🇸 English</span>
+                            <span class="material-icons language-dropdown-icon">expand_more</span>
+                        </button>
+                        <div class="language-dropdown-menu" id="language-dropdown-menu" role="listbox" aria-label="Language selector">
+                            <button class="language-option" type="button" data-lang="en" role="option">🇺🇸 English</button>
+                            <button class="language-option" type="button" data-lang="es" role="option">🇪🇸 Español</button>
+                            <button class="language-option" type="button" data-lang="fr" role="option">🇫🇷 Français</button>
+                            <button class="language-option" type="button" data-lang="de" role="option">🇩🇪 Deutsch</button>
+                            <button class="language-option" type="button" data-lang="ja" role="option">🇯🇵 日本語</button>
+                            <button class="language-option" type="button" data-lang="pt" role="option">🇵🇹 Português</button>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <button class="menu" onclick="openSidebar()">
+                        <span class="material-icons">menu</span>
+                    </button>
+                </li>
+                <!-- The Sign In Dropdown must live cleanly inside an <li> wrapper to maintain list structure -->
+                <li>
+                    <div class="dropdown" id="dropdown">
+                        <button id="dropdownToggle" class="dropdown-toggle" data-en="Sign In" data-es="Iniciar sesión" data-fr="Se connecter" data-de="Anmelden" data-ja="ログイン" data-pt="Entrar">Sign In</button>
+                        <div id="dropdownMenu" class="dropdown-menu">
+                            <div id="loadingSpinner" class="dropdown-loading" style="display: none;">
+                                <div class="spinner"></div>
+                                <p data-en="Loading..." data-es="Cargando..." data-fr="Chargement..." data-de="Wird geladen..." data-ja="読み込み中..." data-pt="Carregando...">Loading...</p>
+                            </div>
+                            <div class="g_id_signin" data-theme="filled_blue" data-text="signup_with"></div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="search-modal hidden" id="searchModal" aria-hidden="true">
+        <div class="search-modal-backdrop" id="searchModalBackdrop"></div>
+        <div class="search-modal-panel" role="dialog" aria-modal="true" aria-label="Site search">
+            <div class="search-modal-header">
+                <div>
+                    <p class="search-kicker">Search</p>
+                    <h3>Find what you need instantly</h3>
+                </div>
+                <button class="search-close-btn" id="searchCloseBtn" type="button" aria-label="Close search">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <label class="search-input-shell" for="searchInput">
+                <span class="material-icons">search</span>
+                <input id="searchInput" type="search" placeholder="Search about, services, mining, contact..." autocomplete="off">
+            </label>
+            <div class="search-suggestions" id="searchSuggestions"></div>
+            <div class="search-results" id="searchResults">
+                <p class="search-empty">Start typing to explore VishVeda.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FLOATING SIDEBAR: Placed entirely out of the list and header flow -->
+    <nav class="sidebar" id="mySidebar" aria-label="Quick navigation">
+        <div class="sidebar-header">
+            <div>
+                <p class="sidebar-kicker">Explore</p>
+                <h3>VishVeda</h3>
+            </div>
+            <button class="sidebar-close" type="button" onclick="closeSidebar()" aria-label="Close navigation">
+                <span class="material-icons">close</span>
+            </button>
+        </div>
+        <div class="sidebar-links">
+            <a href="/real-estate/index.html">Real Estate</a>
+            <a href="/mining/index.html">Mining</a>
+            <a href="#restaurants">Restaurants</a>
+            <a href="#agriculture">Agriculture</a>
+        </div>
+        <div class="sidebar-footer">Strategy • Ventures • Growth</div>
+    </nav>
+
+    <div id="settingsPanel" class="settings-panel">
+        <div class="settings-overlay"></div>
+        <div class="settings-content">
+            <div id="settingsLoading" class="settings-loading" style="display: none;">
+                <div class="loading-spinner">
+                    <div class="spinner"></div>
+                </div>
+                <p data-en="Saving..." data-es="Guardando..." data-fr="Enregistrement..." data-de="Wird gespeichert..." data-ja="保存中..." data-pt="Salvando...">Saving...</p>
+            </div>
+
+            <div class="settings-header">
+                <h2 data-en="Settings" data-es="Configuración" data-fr="Paramètres" data-de="Einstellungen" data-ja="設定" data-pt="Configurações">Settings</h2>
+                <button id="closeSettingsBtn" class="close-settings-btn">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            
+            <div class="settings-tabs">
+                <button class="tab-btn active" data-tab="profile" data-en="Profile" data-es="Perfil" data-fr="Profil" data-de="Profil" data-ja="プロフィール" data-pt="Perfil">
+                    <span class="material-icons">person</span>
+                    <span class="tab-label">Profile</span>
+                </button>
+                <button class="tab-btn" data-tab="preferences" data-en="Preferences" data-es="Preferencias" data-fr="Préférences" data-de="Einstellungen" data-ja="設定" data-pt="Preferências">
+                    <span class="material-icons">tune</span>
+                    <span class="tab-label">Preferences</span>
+                </button>
+                <button class="tab-btn" data-tab="privacy" data-en="Privacy" data-es="Privacidad" data-fr="Confidentialité" data-de="Datenschutz" data-ja="プライバシー" data-pt="Privacidade">
+                    <span class="material-icons">lock</span>
+                    <span class="tab-label">Privacy</span>
+                </button>
+                <button class="tab-btn" data-tab="notifications" data-en="Notifications" data-es="Notificaciones" data-fr="Notifications" data-de="Benachrichtigungen" data-ja="通知" data-pt="Notificações">
+                    <span class="material-icons">notifications</span>
+                    <span class="tab-label">Notifications</span>
+                </button>
+                <button class="tab-btn" data-tab="account" data-en="Account" data-es="Cuenta" data-fr="Compte" data-de="Konto" data-ja="アカウント" data-pt="Conta">
+                    <span class="material-icons">security</span>
+                    <span class="tab-label">Account</span>
+                </button>
+            </div>
+
+            <div class="settings-body">
+                <div class="tab-content active" id="tab-profile">
+                    <div class="settings-section">
+                        <h3 data-en="Profile Information" data-es="Información de perfil" data-fr="Informations de profil" data-de="Profilinformationen" data-ja="プロフィール情報" data-pt="Informações de perfil">Profile Information</h3>
+                        <div class="setting-item">
+                            <label data-en="Name" data-es="Nombre" data-fr="Nom" data-de="Name" data-ja="名前" data-pt="Nome">Name</label>
+                            <input type="text" id="profileName" placeholder="Your name" class="setting-input">
+                        </div>
+                        <div class="setting-item">
+                            <label data-en="Email" data-es="Correo electrónico" data-fr="Email" data-de="E-Mail" data-ja="メール" data-pt="Email">Email</label>
+                            <input type="email" id="profileEmail" placeholder="your@email.com" class="setting-input" readonly>
+                        </div>
+                        <div class="setting-item">
+                            <label data-en="Bio" data-es="Biografía" data-fr="Biographie" data-de="Biografie" data-ja="自己紹介" data-pt="Biografia">Bio</label>
+                            <textarea id="profileBio" placeholder="Tell us about yourself" class="setting-input" rows="3" data-en-placeholder="Tell us about yourself" data-es-placeholder="Cuéntanos sobre ti" data-fr-placeholder="Parlez-nous de vous"></textarea>
+                        </div>
+                        <button class="save-btn" data-en="Save Changes" data-es="Guardar cambios" data-fr="Enregistrer les modifications" data-de="Änderungen speichern" data-ja="変更を保存" data-pt="Salvar alterações">Save Changes</button>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="tab-preferences">
+                    <div class="settings-section">
+                        <h3 data-en="Display & Behavior" data-es="Pantalla y comportamiento" data-fr="Affichage et comportement" data-de="Anzeige und Verhalten" data-ja="表示と動作" data-pt="Exibição e comportamento">Display & Behavior</h3>
+                        <div class="setting-item">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="prefCompactView" class="setting-checkbox">
+                                <span data-en="Compact View" data-es="Vista compacta" data-fr="Vue compacte" data-de="Kompakte Ansicht" data-ja="コンパクトビュー" data-pt="Visualização compacta">Compact View</span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label data-en="Default Language" data-es="Idioma predeterminado" data-fr="Langue par défaut" data-de="Standardsprache" data-ja="デフォルト言語" data-pt="Idioma padrão">Default Language</label>
+                            <select class="setting-input" id="prefLanguage" onchange="changeLanguage(this.value)">
+                                <option value="en">English</option>
+                                <option value="es">Español</option>
+                                <option value="fr">Français</option>
+                                <option value="de">Deutsch</option>
+                                <option value="ja">日本語</option>
+                                <option value="pt">Português</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="prefAutoPlayVideos" class="setting-checkbox" checked>
+                                <span data-en="Auto-play Videos" data-es="Reproducción automática de vídeos" data-fr="Lecture automatique des vidéos" data-de="Videos automatisch abspielen" data-ja="動画 de 自動再生" data-pt="Reprodução automática de vídeos">Auto-play Videos</span>
+                            </label>
+                        </div>
+                        <button class="save-btn" data-en="Save Changes" data-es="Guardar cambios" data-fr="Enregistrer les modifications" data-de="Änderungen speichern" data-ja="変更を保存" data-pt="Salvar alterações">Save Changes</button>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="tab-privacy">
+                    <div class="settings-section">
+                        <h3 data-en="Privacy Settings" data-es="Configuración de privacidad" data-fr="Paramètres de confidentialité" data-de="Datenschutzeinstellungen" data-ja="プライバシー設定" data-pt="Configurações de privacidade">Privacy Settings</h3>
+                        <div class="setting-item">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="privacyProfilePublic" class="setting-checkbox" checked>
+                                <span data-en="Make Profile Public" data-es="Hacer perfil público" data-fr="Rendre le profil public" data-de="Profil öffentlich machen" data-ja="プロフィールを公開" data-pt="Tornar perfil público">Make Profile Public</span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="privacyShowEmail" class="setting-checkbox">
+                                <span data-en="Show Email Publicly" data-es="Mostrar correo públicamente" data-fr="Afficher l'email publiquement" data-de="E-Mail öffentlich anzeigen" data-ja="メールを公開表示" data-pt="Mostrar email publicamente">Show Email Publicly</span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="privacyAllowMessaging" class="setting-checkbox" checked>
+                                <span data-en="Allow Messaging from Others" data-es="Permitir mensajes de otros" data-fr="Autoriser la messagerie des autres" data-de="Messaging von anderen erlauben" data-ja="他のユーザーからのメッセージを許可" data-pt="Permitir mensagens de outros">Allow Messaging from Others</span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <h4 data-en="Data Download" data-es="Descargar datos" data-fr="Télécharger les données" data-de="Daten herunterladen" data-ja="データをダウンロード" data-pt="Baixar dados">Data Download</h4>
+                            <button class="secondary-btn" data-en="Download My Data" data-es="Descargar mis datos" data-fr="Télécharger mes données" data-de="Meine Daten herunterladen" data-ja="データをダウンロード" data-pt="Baixar meus dados">Download My Data</button>
+                        </div>
+                        <button class="save-btn" data-en="Save Changes" data-es="Guardar cambios" data-fr="Enregistrer les modifications" data-de="Änderungen保存" data-ja="変更を保存" data-pt="Salvar alterações">Save Changes</button>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="tab-notifications">
+                    <div class="settings-section">
+                        <h3 data-en="Notification Preferences" data-es="Preferencias de notificaciones" data-fr="Préférences de notification" data-de="Benachrichtigungseinstellungen" data-ja="通知設定" data-pt="Preferências de notificação">Notification Preferences</h3>
+                        <div class="setting-item">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="notifEmail" class="setting-checkbox" checked>
+                                <span data-en="Email Notifications" data-es="Notificaciones por correo" data-fr="Notifications par email" data-de="E-Mail-Benachrichtigungen" data-ja="メール通知" data-pt="Notificações por email">Email Notifications</span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="notifPush" class="setting-checkbox" checked>
+                                <span data-en="Push Notifications" data-es="Notificaciones push" data-fr="Notifications push" data-de="Push-Benachrichtigungen" data-ja="プッシュ通知" data-pt="Notificações push">Push Notifications</span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="notifUpdates" class="setting-checkbox" checked>
+                                <span data-en="News & Updates" data-es="Noticias y actualizaciones" data-fr="Nouvelles et mises à jour" data-de="Nachrichten und Updates" data-ja="ニュースと更新" data-pt="Notícias e atualizações">News & Updates</span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="notifMarketing" class="setting-checkbox">
+                                <span data-en="Marketing & Promotions" data-es="Marketing y promociones" data-fr="Marketing et promotions" data-de="Marketing und Promotionen" data-ja="マーケティングとプロモーション" data-pt="Marketing e promoções">Marketing & Promotions</span>
+                            </label>
+                        </div>
+                        <button class="save-btn" data-en="Save Changes" data-es="Guardar cambios" data-fr="Enregistrer les modifications" data-de="Änderungen speichern" data-ja="変更を保存" data-pt="Salvar alterações">Save Changes</button>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="tab-account">
+                    <div class="settings-section">
+                        <h3 data-en="Account Settings" data-es="Configuración de cuenta" data-fr="Paramètres du compte" data-de="Kontoeinstellungen" data-ja="アカウント設定" data-pt="Configurações da conta">Account Settings</h3>
+                        <div class="setting-item">
+                            <label data-en="Account Status" data-es="Estado de la cuenta" data-fr="État du compte" data-de="Kontostatus" data-ja="アカウント状態" data-pt="Status da conta">Account Status</label>
+                            <div class="status-badge" data-en="Active" data-es="Activo" data-fr="Actif" data-de="Aktiv" data-ja="アクティブ" data-pt="Ativo">Active</div>
+                        </div>
+                        <div class="setting-item">
+                            <label data-en="Last Login" data-es="Último acceso" data-fr="Dernière connexion" data-de="Letzte Anmeldung" data-ja="最後のログイン" data-pt="Último acesso">Last Login</label>
+                            <p id="lastLogin" style="color: rgba(255, 255, 255, 0.7); font-size: 13px; margin: 4px 0 0 0;">Just now</p>
+                        </div>
+                        <hr style="border: none; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 16px 0;">
+                        <h4 data-en="Danger Zone" data-es="Zona de peligro" data-fr="Zone de danger" data-de="Gefahrenzone" data-ja="危険ゾーン" data-pt="Zona de perigo">Danger Zone</h4>
+                        <button class="danger-btn" data-en="Delete Account" data-es="Eliminar cuenta" data-fr="Supprimer le compte" data-de="Konto löschen" data-ja="アカウントを削除" data-pt="Excluir conta">Delete Account</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="portal-root"></div>
+
+    <svg style="visibility: hidden; position: absolute;" width="0" height="0">
+      <defs>
+        <filter id="liquid-glass-goo">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="9" result="blur-layer" />
+          <feColorMatrix in="blur-layer" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 24 -11" result="goo-blend" />
+          <feComposite in="SourceGraphic" in2="goo-blend" operator="atop" />
+        </filter>
+      </defs>
+    </svg>
+
+    <section class="hero" id="home">
+        <div class="hero-bg" id="bg1"></div>
+        <div class="hero-bg" id="bg2"></div>
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <h1 data-en="VishVeda" data-es="VishVeda" data-fr="VishVeda" data-de="VishVeda" data-ja="VishVeda" data-pt="VishVeda">VishVeda</h1>
+            <div class="seperator"></div>
+            <span id="rotating-text" data-en="Real Estate" data-es="Bienes raíces" data-fr="Immobilier" data-de="Immobilien" data-ja="不動産" data-pt="Imobiliária">Real Estate</span>
+        </div>
+    </section>
+
+    <section class="about-section" id="about">
+        <div class="container scroll-animate">
+            <div class="about-shell">
+                <div class="about-copy">
+                    <div class="section-eyebrow">About VishVeda</div>
+                    <h2>We build durable businesses, not just ideas.</h2>
+                    <p>VishVeda Group operates with a hands-on approach across mining, hospitality, real estate, and agriculture. We combine industry experience, disciplined execution, and long-term partnerships to create ventures that perform with clarity, credibility, and lasting value.</p>
+                    <div class="about-highlights">
+                        <span class="highlight-pill">Operational excellence</span>
+                        <span class="highlight-pill">Strategic growth</span>
+                        <span class="highlight-pill">Trusted delivery</span>
+                    </div>
+                </div>
+                <div class="about-panel">
+                    <div class="about-panel-card">
+                        <div class="panel-label">Current focus</div>
+                        <ul>
+                            <li>Market-ready strategy and venture positioning</li>
+                            <li>Cross-sector collaboration with strong governance</li>
+                            <li>High-value project planning and execution support</li>
+                        </ul>
+                    </div>
+                    <div class="about-metrics">
+                        <div class="stat-card">
+                            <strong>4+</strong>
+                            <span>High-impact sectors</span>
+                        </div>
+                        <div class="stat-card">
+                            <strong>100%</strong>
+                            <span>Execution-led approach</span>
+                        </div>
+                        <div class="stat-card">
+                            <strong>24/7</strong>
+                            <span>Partnership support</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="vision-section">
+        <div class="container scroll-animate">
+            <div class="section-heading">
+                <div class="section-eyebrow">Our advantage</div>
+                <h2>Precision-led thinking for ventures that must scale with confidence.</h2>
+            </div>
+            <div class="vision-grid">
+                <article class="vision-card">
+                    <h3>Vision</h3>
+                    <p>We create future-facing ventures with deep operational discipline and a strong foundation for sustainable results.</p>
+                </article>
+                <article class="vision-card">
+                    <h3>Execution</h3>
+                    <p>Every engagement is shaped around clarity, accountability, and smart delivery from strategy through completion.</p>
+                </article>
+                <article class="vision-card">
+                    <h3>Relationships</h3>
+                    <p>Partnerships are built on trust, transparency, and long-term value rather than short-term transactions.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <div id="cookie-banner" class="cookie-banner hidden">
+        <section class="cookie-title"><span class="material-icons">cookie</span>Cookie Notice</section>
+        <p>This website uses cookies to improve your user experience.</p>
+        <div class="cookie-buttons">
+            <button id="accept-btn" class="accept-btn">Accept Cookies</button>
+            <button id="decline-btn" class="decline-btn">Decline Cookies</button>
+        </div>
+    </div>
+
+    <section class="services-section" id="services">
+        <div class="container scroll-animate">
+            <div class="section-heading">
+                <div class="section-eyebrow">Services</div>
+                <h2>Built for ambitious ventures that need precision.</h2>
+                <p class="section-lead">From concept to execution, our services are shaped around real-world delivery, measurable progress, and premium standards.</p>
+            </div>
+            <div class="services-grid">
+                <article class="service-card">
+                    <div class="service-top">
+                        <span class="service-number">01</span>
+                        <div class="service-icon">⛏️</div>
+                    </div>
+                    <h3>Mining & resource strategy</h3>
+                    <p>End-to-end planning, operational oversight, and value-driven resource development for complex projects.</p>
+                    <span class="service-tag">Resource planning</span>
+                </article>
+                <article class="service-card">
+                    <div class="service-top">
+                        <span class="service-number">02</span>
+                        <div class="service-icon">🍽️</div>
+                    </div>
+                    <h3>Hospitality & brand growth</h3>
+                    <p>Elevated guest experiences, efficient operations, and brand positioning for premium dining concepts.</p>
+                    <span class="service-tag">Hospitality execution</span>
+                </article>
+                <article class="service-card">
+                    <div class="service-top">
+                        <span class="service-number">03</span>
+                        <div class="service-icon">🏡</div>
+                    </div>
+                    <h3>Real estate development</h3>
+                    <p>Modern property solutions, development insight, and refined investment opportunities shaped by demand.</p>
+                    <span class="service-tag">Property strategy</span>
+                </article>
+                <article class="service-card">
+                    <div class="service-top">
+                        <span class="service-number">04</span>
+                        <div class="service-icon">🌿</div>
+                    </div>
+                    <h3>Agricultural innovation</h3>
+                    <p>Practical farming models designed for resilience, efficiency, and long-term value creation.</p>
+                    <span class="service-tag">Sustainable growth</span>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="process-section">
+        <div class="container scroll-animate">
+            <div class="section-heading">
+                <div class="section-eyebrow">How we work</div>
+                <h2>A structured path from opportunity to execution.</h2>
+            </div>
+            <div class="process-steps">
+                <article class="process-card">
+                    <span>01</span>
+                    <h3>Discover</h3>
+                    <p>We assess the opportunity, market conditions, and strategic fit with clarity and precision.</p>
+                </article>
+                <article class="process-card">
+                    <span>02</span>
+                    <h3>Design</h3>
+                    <p>We shape the roadmap, governance model, and commercial direction around long-term value.</p>
+                </article>
+                <article class="process-card">
+                    <span>03</span>
+                    <h3>Deliver</h3>
+                    <p>We support execution with disciplined oversight and a strong focus on measurable outcomes.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+        <div class="container scroll-animate">
+            <div class="contact-shell">
+                <div class="contact-panel">
+                    <div class="section-eyebrow">Reach us</div>
+                    <h2>Let’s talk about your next move.</h2>
+                    <p>Whether you are launching a new venture or scaling an existing one, we help turn bold plans into reliable execution.</p>
+                    <div class="contact-chip-row">
+                        <span class="highlight-pill">Direct consultation</span>
+                        <span class="highlight-pill">Confidential planning</span>
+                        <span class="highlight-pill">Global outlook</span>
+                    </div>
+                    <div class="contact-info-card">
+                        <div>
+                            <strong>Response time</strong>
+                            <span>Within 24 hours</span>
+                        </div>
+                        <div>
+                            <strong>Focus</strong>
+                            <span>Strategy, partnerships, growth</span>
+                        </div>
+                        <div>
+                            <strong>Contact</strong>
+                            <span>hello@vishveda.com</span>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <textarea placeholder="Tell us about your idea" required></textarea>
+                    <button type="submit">Start a conversation</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <button class="floating-ai-btn" id="openAiBtn" onclick="openAiWindow()">
+        <span class="material-icons">smart_toy</span>
+        <span data-en="Ask AI" data-es="Preguntar al IA" data-fr="Demander à l'IA">Ask AI</span>
+    </button>
+
+    <div class="os-window hidden" id="aiWindow">
+        <div class="window-bar">
+            <div class="window-title">
+                <span class="material-icons" style="font-size: 16px; vertical-align: middle; margin-right: 4px;">wysiwyg</span> AI Assistant
+            </div>
+            <div class="window-controls">
+                <button class="control-btn minimize" id="minimizeBtn" title="Minimize">
+                    <span class="material-icons">minimize</span>
+                </button>
+                <button class="control-btn close" id="closeBtn" title="Close">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="window-content">
+            <div class="ai-suggestions" id="aiSuggestions"></div>
+            <div class="chat-body" id="chatBody">
+                <div class="message bot-msg">
+                    Hello! I’m VishVeda’s AI guide. Ask about our sectors, services, or next steps.
+                </div>
+            </div>
+            <div class="chat-footer">
+                <input type="text" id="userInput" placeholder="Type a message..." autocomplete="off">
+                <button id="sendBtn">
+                    <span class="material-icons">send</span>
+                </button>
+            </div>
+        </div>
+    </div>
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-col">
+      <h2 class="footer-logo">VishVeda Group</h2>
+    </div>
+    
+    <!-- Column 1: Quick Links -->
+    <div class="footer-col">
+      <h3>Contact Us</h3>
+      <ul class="footer-links">
+        <li>vishnukarthik1402@gmail.com</li>
+      </ul>
+    </div>
+
+    <!-- Column 2: Services -->
+    <div class="footer-col">
+      <h3>Services</h3>
+      <ul class="footer-links">
+        <li><a href="/real-estate/index.html">Real Estate</a></li>
+        <li><a href="/mining/index.html">Mining</a></li>
+        <li><a href="#">Restaurant</a></li>
+        <li><a href="#">Farming</a></li>
+      </ul>
+    </div>
+
+    <!-- Column 3: Newsletter & Socials -->
+    <div class="footer-col newsletter-col">
+      <h3>Newsletter</h3>
+      <div class="newsletter-form">
+        <input type="email" id="newsletter-email" placeholder="Enter your email">
+        <button type="submit" id="newsletter-btn">→</button>
+      </div>
+      <!-- Empty space helper handles rock-solid structure layout -->
+      <p id="error-message">&nbsp;</p>
+
+      <div class="social-buttons">
+        <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+        <a href="#" class="twitter"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+        <a href="https://www.youtube.com/@vishveda-2025" class="youtube"><i class="fa fa-youtube"></i></a>
+      </div> 
+    </div> 
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="bottom-bar">
+    <p>&copy; <span id="year"></span> VishVeda Group. All rights reserved.</p>
+    <ul class="important-links">
+        <li><a href="#">Terms & Conditions</a></li>
+        <li><a href="#">Privacy Policies</a></li>
+        <li><a href="#">Cookie Policy</a></li>
+    </ul>
+  </div>
+</footer>
+
+
+
+    <!-- Script to automatically update the year -->
+    <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+</footer>
+
+</div>
+    <script src="js/gemini-config.js"></script>
+    <script src="js/app.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="https://kit.fontawesome.com/1ee269e30a.js" crossorigin="anonymous"></script>
+
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+</body>
+</html>
