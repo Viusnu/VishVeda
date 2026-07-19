@@ -1020,7 +1020,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     // 🔴 PASTE YOUR ACTUAL APPS SCRIPT WEB APP URL HERE
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxZTFxJJDz64PVH__n52M3A5SG-ofSAFFJh8xUvevaNkbTJ57BWEXBZauAdR8TnmnJD/exec";
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwACEGVXtUvXswkCOSQ8RkBl2lvBdzKzuGcw9H8GcTiArtcWnYiCmFJYnTjdE8MIkd4hg/exec";
 
     const aiWindow = document.getElementById('aiWindow');
     const openAiBtn = document.getElementById('openAiBtn');
