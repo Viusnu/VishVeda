@@ -41,9 +41,8 @@ body.offline-active > *:not(.offline-screen) {
   align-items: center;
   justify-content: center;
   padding: 24px;
-  background: rgba(8, 12, 24, 0.72);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
 }
 
 .offline-screen.hidden {
@@ -53,7 +52,7 @@ body.offline-active > *:not(.offline-screen) {
 .offline-card {
   width: min(460px, 100%);
   padding: 32px 28px;
-  border-radius: 28px;
+  border-radius: 40px;
   background: rgba(255, 255, 255, 0.95);
   box-shadow: 0 24px 80px rgba(15, 23, 42, 0.28);
   border: 1px solid rgba(255, 255, 255, 0.8);
@@ -91,7 +90,7 @@ body.offline-active > *:not(.offline-screen) {
 
 .offline-retry {
   border: none;
-  border-radius: 999px;
+  border-radius: 17px;
   padding: 12px 18px;
   background: linear-gradient(135deg, #5d51c5, #7c80df);
   color: white;
@@ -246,24 +245,18 @@ nav.scrolled .search {
 }
 
 .logo {
-  display: flex;
-  align-items: center;
-  font-size: 18px;
-  font-weight: bold;
-  color: #fff;
-  padding-left: 10px;
   /* Force top left placement */
   position: fixed;
-  top: 20px;       /* Space from top edge */
-  left: 25px;      /* Space from left edge */
+  top: 0px;       
+  left: -25px;      
   z-index: 1000;
-  background-color: rgb(93, 81, 197);
-  border-radius: 0px;
-  width: 170px;
-  height: 45px;
-  white-space: nowrap;
-  /* Keeps logo above other elements */
+  
+  /* Bigger wide bounding box */
+  width: 250px;
+  height: 90px;
+  object-fit: contain; /* Keeps it sharp and unsquished */
 }
+
 
 nav ul {
   display: flex;
@@ -302,7 +295,7 @@ nav {
   justify-content: space-between; /* Pushes Logo to left, Menu to right */
   align-items: center;
   width: 100%;
-  height: 80px;
+  height: 90px;
   padding: 0 30px;
   background-color: rgba(255, 255, 255, 0);
   backdrop-filter: blur(0px);
@@ -3748,13 +3741,13 @@ body.search-open {
     right: 24px;
     padding: 10px 16px;
     background: linear-gradient(135deg, #4f46e5, #6d7cff);
+    box-shadow: 0px 20px 50px rgba(79, 70, 229, 0.4);
     color: white;
     border: none;
     border-radius: 999px;
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
-    box-shadow: 0 8px 24px rgba(79, 70, 229, 0.2);
     display: flex;
     align-items: center;
     gap: 8px;
@@ -3781,21 +3774,37 @@ body.search-open {
     right: 24px;
     width: 388px;
     height: 540px;
-    background: #f8f9ff;
-    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.94);
+    border-radius: 24px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    z-index: 1000;
-    box-shadow: 0 12px 36px rgba(15, 23, 42, 0.16);
-    border: 1px solid rgba(15, 23, 42, 0.08);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    transition: transform 0.3s ease, opacity 0.2s ease, visibility 0.2s ease;
-    transform-origin: bottom right;
-    opacity: 1;
-    visibility: visible;
+    z-index: 9999; 
+    box-shadow: 
+        0 4px 6px -1px rgba(15, 23, 42, 0.04),
+        0 20px 40px -4px rgba(15, 23, 42, 0.12),
+        inset 0 1px 0px 0px rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(15, 23, 42, 0.09);
+
+    /* --- IPHONE ANIMATION PREPARATION --- */
+    /* Pin the animation origin to the bottom right corner (where your toggle button sits) */
+    transform-origin: bottom right; 
+    
+    /* Starting state: slightly shrunk down and invisible */
+    transform: scale(0.85) translate3d(0, 0, 0);
+    
+    /* Hardware acceleration rules */
+    backface-visibility: hidden;
+    will-change: transform, opacity;
+    
+    /* iOS Custom Cubic Bezier Curve (Fast start, elegant spring-like deceleration) */
+    transition: 
+        transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1), 
+        opacity 0.25s ease-out, 
+        visibility 0.25s;
 }
+
+
 
 .window-content {
     flex: 1;

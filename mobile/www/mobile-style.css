@@ -1,0 +1,94 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* ==========================================
+    MOBILE HEADER & LOGO CONFIGURATION
+   ========================================== */
+.app-header {
+    height: 72px; /* Increased from 60px to give a 60px logo room to breathe */
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Keeps the logo centered horizontally */
+    border-bottom: 1px solid #e5e5ea;
+    padding: 0 16px;
+    position: relative;
+    z-index: 101; /* Keeps header sitting safely above scrolling text content */
+}
+
+.navbar-logo {
+    height: 80px;        /* Set to your requested 60px height */
+    width: auto;         /* Keeps the correct aspect ratio so it doesn't stretch */
+    object-fit: contain; /* Smooths out rendering */
+    
+    /* --- POSITION LOGO HIGHER --- */
+    margin-top: -20px;    /* Shifts the logo slightly upward toward the very top */
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Keeps search components on the right */
+    flex: 1;
+    max-width: 200px;
+    height: 40px;
+    position: relative;
+}
+
+/* Default Input State: Hidden / Zero Width */
+.search-input {
+    width: 0;
+    opacity: 0;
+    height: 36px;
+    border: none;
+    border-radius: 8px;
+    background-color: #f2f2f7;
+    padding: 0;
+    font-size: 14px;
+    outline: none;
+    transition: width 0.25s ease, opacity 0.15s ease, padding 0.1s ease;
+    pointer-events: none; /* Stops accidental taps when hidden */
+}
+
+/* Button default state: A clean, tappable search circle/box */
+.search-button {
+    height: 38px;
+    padding: 0 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    z-index: 2; /* Keeps button accessible above the sliding input field */
+}
+
+/* Active State: Expand input field dynamically to the left of the button */
+.search-container.active .search-input {
+    width: 140px; /* Adjust this number depending on phone width */
+    opacity: 1;
+    padding: 0 10px;
+    border: 1px solid #e5e5ea;
+    pointer-events: auto; /* Re-enable typing touch inputs */
+}
+
+/* Optional: Slight color change on button when input is open */
+.search-container.active .search-button {
+    background-color: #555;
+    border-radius: 0 8px 8px 0; /* Flat edge on the left to merge with input field */
+}
+.search-container.active .search-input {
+    border-radius: 8px 0 0 8px; /* Flat edge on the right to merge with button */
+}

@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>VishVeda Group - Ecosystem Platform</title>
+    
+    <!-- FontAwesome Engine Web Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Identity Services -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <!-- ==========================================
+       COMPREHENSIVE INTERFACE STYLES (CSS)
+       ========================================== -->
+    <style>
+        /* --- CSS THEME VARIABLES --- */
+        :root[data-theme="dark"] {
+            --bg-color: #000000;
+            --text-color: #f1f3f5;
+            --text-muted: #8b949e;
+            --card-bg: #121418;
+            --card-border: rgba(255, 255, 255, 0.08);
+            --header-bg: rgba(0, 0, 0, 0.6);
+            --nav-bg: rgba(0, 0, 0, 0.85);
+            --input-bg: rgba(255, 255, 255, 0.08);
+            --pill-bg: rgba(255, 255, 255, 0.06);
+            --metric-bg: rgba(255, 255, 255, 0.04);
+            --ai-bubble-user: #007bff;
+            --ai-bubble-bot: #1c2128;
+            --ai-text-bot: #e6edf3;
+            --hero-gradient: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.95) 100%);
+        }
+
+        :root[data-theme="light"] {
+            --bg-color: #bacaf0;
+            --text-color: #121826;
+            --text-muted: #4a5568;
+            --card-bg: #ffffff;
+            --card-border: rgba(0, 0, 0, 0.08);
+            --header-bg: rgba(186, 202, 240, 0.7);
+            --nav-bg: rgba(186, 202, 240, 0.9);
+            --input-bg: rgba(0, 0, 0, 0.06);
+            --pill-bg: rgba(0, 0, 0, 0.06);
+            --metric-bg: rgba(0, 0, 0, 0.04);
+            --ai-bubble-user: #0056b3;
+            --ai-bubble-bot: #e2e8f0;
+            --ai-text-bot: #1a202c;
+            --hero-gradient: linear-gradient(180deg, rgba(186,202,240,0.2) 0%, rgba(186,202,240,0.95) 100%);
+        }
+
+        /* Global Resets */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        input, select, textarea {
+            -webkit-user-select: text;
+            user-select: text;
+            font-family: inherit;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            height: 100vh;
+            overflow: hidden;
+            position: fixed;
+            width: 100vw;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        /* --- THE APP LAUNCH SPLASH OVERLAY PANEL --- */
+        #app-splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #000000;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        #app-splash-screen.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .splash-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .splash-logo {
+            width: 84px;
+            height: 84px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 10px 30px rgba(0, 123, 255, 0.3);
+            animation: splashPulse 1.5s infinite ease-in-out;
+            background: linear-gradient(135deg, #007bff, #6f42c1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: #fff;
+        }
+
+        .splash-title {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #ffffff;
+        }
+
+        @keyframes splashPulse { 
+            0%, 100% { transform: scale(1); } 
+            50% { transform: scale(1.05); opacity: 0.85; } 
+        }
+
+        /* --- UPPER NAVBAR --- */
+        .app-header {
+            height: 68px;
+            background: var(--header-bg);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--card-border);
+            padding: 0 12px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 2000;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+
+        .app-brand-title {
+            font-weight: 800;
+            font-size: 16px;
+            letter-spacing: -0.3px;
+            color: var(--text-color);
+            white-space: nowrap;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* --- THEME TOGGLE BUTTON --- */
+
+        /* --- SQUIRCLE IDENTITY MANAGER DROPDOWN DRAWER --- */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            z-index: 2005;
+        }
+
+        .dropdown-toggle {
+            height: 38px;
+            padding: 0 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--input-bg);
+            color: var(--text-color);
+            border: 1px solid var(--card-border);
+            border-radius: 19px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .dropdown-toggle:active { transform: scale(0.94); }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 48px;
+            left: 0;
+            width: 250px;
+            background-color: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 14px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+            display: block;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-6px) scale(0.97);
+            transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .dropdown.show .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--card-border);
+            margin-bottom: 10px;
+        }
+
+        .profile-info img {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #007bff;
+            margin-bottom: 8px;
+        }
+
+        .profile-info .profile-name { 
+            font-size: 14px; 
+            font-weight: 600; 
+            color: var(--text-color); 
+            display: block; 
+            margin-bottom: 2px; 
+        }
+
+        .profile-info small { 
+            font-size: 11px; 
+            color: var(--text-muted); 
+            display: block; 
+        }
+
+        .dropdown-item {
+            width: 100%;
+            height: 36px;
+            background-color: rgba(219, 68, 55, 0.15);
+            color: #ff6b6b;
+            border: 1px solid rgba(219, 68, 55, 0.2);
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.15s ease;
+        }
+
+        .dropdown-item:active { background-color: #db4437; color: #ffffff; }
+
+        #g_id_signin { width: 100%; display: flex; justify-content: center; }
+
+        /* --- SEARCH SYSTEM --- */
+        .search-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            height: 38px;
+            position: relative;
+            width: 38px;
+            transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .search-input {
+            width: 0;
+            opacity: 0;
+            height: 38px;
+            border: 1px solid var(--card-border);
+            border-radius: 19px;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            padding: 0;
+            font-size: 13px;
+            outline: none;
+            transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+            pointer-events: none;
+            position: absolute;
+            right: 0;
+            backdrop-filter: blur(8px);
+        }
+
+        .search-input::placeholder { color: var(--text-muted); }
+
+        .search-button {
+            height: 38px;
+            width: 38px;
+            border-radius: 50%;
+            background: var(--input-bg);
+            color: var(--text-color);
+            border: 1px solid var(--card-border);
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .search-container.active { width: 170px; }
+
+        .search-container.active .search-input {
+            width: 100%;
+            opacity: 1;
+            padding: 0 38px 0 14px;
+            background-color: var(--card-bg);
+            border-color: #007bff;
+            pointer-events: auto;
+        }
+
+        .search-container.active .search-button {
+            background: transparent;
+            border: none;
+            position: absolute;
+            right: 0;
+            z-index: 2;
+        }
+
+        /* --- MAIN SCROLLABLE REAL-ESTATE CANVASES --- */
+        .app-content {
+            margin-top: 0;
+            height: calc(100vh - 65px);
+            overflow-y: auto;
+            padding-bottom: 90px;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+        }
+
+        .app-view { display: none; flex-direction: column; width: 100%; opacity: 0; transform: translateY(8px); transition: all 0.25s ease; }
+        .app-view.active { display: flex; opacity: 1; transform: translateY(0); }
+
+        .sub-page { display: none; flex-direction: column; width: 100%; opacity: 0; transform: translateX(12px); transition: all 0.25s ease; }
+        .sub-page.active { display: flex; opacity: 1; transform: translateX(0); }
+
+        /* --- HERO HEADER SECTION --- */
+        .hero-section {
+            position: relative;
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+            margin-bottom: 16px;
+        }
+
+        .mining-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            filter: brightness(75%);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 20px;
+            background: var(--hero-gradient);
+        }
+
+        .hero-badge {
+            align-self: flex-start;
+            background: rgba(0, 123, 255, 0.25);
+            border: 1px solid rgba(0, 123, 255, 0.5);
+            color: #007bff;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-color);
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* --- INDUSTRY FUNCTIONAL CARDS --- */
+        .cards-container {
+            padding: 0 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .industry-card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            border: 1px solid var(--card-border);
+            padding: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.3s ease;
+        }
+
+        .industry-card:active { transform: scale(0.99); }
+
+        .card-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .card-title-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .mining-icon { background: rgba(255, 165, 0, 0.15); color: #ffa500; }
+        .realestate-icon { background: rgba(0, 123, 255, 0.15); color: #007bff; }
+        .farming-icon { background: rgba(40, 167, 69, 0.15); color: #28a745; }
+        .restaurant-icon { background: rgba(220, 53, 69, 0.15); color: #dc3545; }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+
+        .card-tag {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 8px;
+            background: var(--pill-bg);
+            color: var(--text-muted);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .metric-box {
+            background: var(--metric-bg);
+            border: 1px solid var(--card-border);
+            padding: 10px;
+            border-radius: 12px;
+        }
+
+        .metric-label { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
+        .metric-value { font-size: 15px; font-weight: 700; color: #007bff; }
+
+        .filter-pills {
+            display: flex;
+            gap: 8px;
+            margin: 10px 0;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+
+        .pill-btn {
+            background: var(--pill-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-color);
+            padding: 6px 14px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        .pill-btn.active {
+            background: #007bff;
+            color: #ffffff;
+            border-color: #007bff;
+        }
+
+        .action-btn-primary {
+            width: 100%;
+            height: 40px;
+            background: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: background 0.2s ease;
+        }
+
+        .action-btn-primary:active { background: #0056b3; }
+
+        /* --- GEMINI AI CHAT SECTION --- */
+        .gemini-container {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 155px);
+            padding: 0 16px;
+            margin-top: 75px;
+        }
+
+        .gemini-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            margin-bottom: 12px;
+        }
+
+        .gemini-sparkle-icon {
+            font-size: 20px;
+            background: linear-gradient(135deg, #4285f4, #9b51e0, #e91e63);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gemini-chat-box {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding-right: 4px;
+            margin-bottom: 12px;
+        }
+
+        .chat-bubble {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 13px;
+            line-height: 1.45;
+            word-break: break-word;
+            animation: fadeInBubble 0.25s ease;
+        }
+
+        @keyframes fadeInBubble {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chat-bubble.user {
+            align-self: flex-end;
+            background-color: var(--ai-bubble-user);
+            color: #ffffff;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-bubble.gemini {
+            align-self: flex-start;
+            background-color: var(--ai-bubble-bot);
+            color: var(--ai-text-bot);
+            border-bottom-left-radius: 4px;
+            border: 1px solid var(--card-border);
+        }
+
+        .chat-bubble.loading {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--text-muted);
+            border-radius: 50%;
+            animation: typingBounce 1.2s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingBounce {
+            0%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-6px); }
+        }
+
+        .gemini-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 6px 6px 6px 16px;
+        }
+
+        .gemini-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-color);
+            font-size: 13px;
+        }
+
+        .gemini-send-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #007bff, #6f42c1);
+            color: #ffffff;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .gemini-send-btn:active { transform: scale(0.9); }
+
+        .preset-chips {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 8px;
+        }
+
+        .chip-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-color);
+            padding: 6px 12px;
+            border-radius: 14px;
+            font-size: 11px;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        /* --- STICKY FLOATING NAVIGATION BAR --- */
+        .app-nav {
+            position: fixed; 
+            bottom: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 65px;
+            background-color: var(--nav-bg); 
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px); 
+            border-top: 1px solid var(--card-border);
+            display: flex; 
+            justify-content: space-around; 
+            align-items: center; 
+            z-index: 2000;
+            transition: background 0.3s ease;
+        }
+
+        .nav-item {
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center;
+            flex: 1; 
+            height: 100%; 
+            color: var(--text-muted); 
+            cursor: pointer; 
+            font-size: 11px; 
+            font-weight: 500; 
+            gap: 4px;
+            transition: color 0.2s ease;
+        }
+
+        .nav-item i { font-size: 18px; transition: transform 0.2s ease; }
+        .nav-item.active { color: #007bff; }
+        .nav-item.active i { transform: scale(1.15); }
+
+        .theme-toggle-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    height: 100%;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 500;
+    gap: 4px;
+    transition: color 0.2s ease;
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+.theme-toggle-btn i {
+    font-size: 18px;
+    transition: transform 0.2s ease;
+}
+
+/* Optional: add active or hover state styles if needed */
+.theme-toggle-btn:hover {
+    color: #007bff;
+}
+
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================
+       1. AUTOMATIC SPLASH LAUNCH SCREEN COVER OVERLAY
+       ========================================== -->
+    <div id="app-splash-screen">
+        <div class="splash-content">
+            <div class="splash-logo">
+                <i class="fas fa-layer-group"></i>
+            </div>
+            <h1 class="splash-title">VishVeda Group</h1>
+        </div>
+    </div>
+
+    <!-- MAIN APP STRUCTURE CONTAINER -->
+    <div class="app-container">
+        
+        <!-- ==========================================
+           2. UPPER NAVBAR
+           ========================================== -->
+        <header class="app-header">
+            <div class="dropdown" id="dropdown">
+                <button id="dropdownToggle" class="dropdown-toggle">Sign In</button>
+                <div id="dropdownMenu" class="dropdown-menu">
+                    <div id="g_id_signin"></div>
+                </div>
+            </div>
+
+            <!-- Search Container -->
+            <div class="search-container">
+                <input type="text" id="appSearchInput" placeholder="Search..." class="search-input">
+                <button class="search-button" id="searchBtn"><i class="fas fa-search"></i></button>
+            </div>
+        </header>
+
+        <!-- ==========================================
+           3. MAIN SCROLLABLE APP CONTENT INTERFACE
+           ========================================== -->
+        <main class="app-content" id="mainContent">
+            
+            <!-- VIEW 1: MAIN HOME DASHBOARD -->
+            <section id="home-view" class="app-view active">
+                <div id="home-hub-page" class="sub-page active">
+                    
+                    <!-- FULL-BLEED HERO BANNER -->
+                    <header class="hero-section">
+                        <img src="https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&w=800&q=80" class="mining-image" alt="Ecosystem Hero">
+                        <div class="hero-overlay">
+                            <span class="hero-badge">Enterprise Operations</span>
+                            <h1 class="hero-title">Industrial Ecosystem</h1>
+                            <p class="hero-subtitle">Resource, asset & directory tracking matrix.</p>
+                        </div>
+                    </header>
+
+                    <!-- FUNCTIONAL SECTOR CARDS -->
+                    <div class="cards-container">
+                        
+                        <!-- MINING CARD -->
+                        <div class="industry-card" data-sector="mining">
+                            <div class="card-header-row">
+                                <div class="card-title-group">
+                                    <div class="card-icon mining-icon"><i class="fas fa-cubes"></i></div>
+                                    <div class="card-title">Mining & Extraction</div>
+                                </div>
+                                <span class="card-tag">ACTIVE YIELD</span>
+                            </div>
+                            <p style="font-size: 12px; color: var(--text-muted);">Telemetry overview from site operations and logistics.</p>
+                            <div class="metrics-grid">
+                                <div class="metric-box">
+                                    <div class="metric-label">Daily Output</div>
+                                    <div class="metric-value">14,250 MT</div>
+                                </div>
+                                <div class="metric-box">
+                                    <div class="metric-label">Active Equipment</div>
+                                    <div class="metric-value">98.4%</div>
+                                </div>
+                            </div>
+                            <button class="action-btn-primary" onclick="openSectorDetails('Mining Operations')">
+                                View Analytics <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+
+                        <!-- REAL ESTATE CARD -->
+                        <div class="industry-card" data-sector="realestate">
+                            <div class="card-header-row">
+                                <div class="card-title-group">
+                                    <div class="card-icon realestate-icon"><i class="fas fa-building"></i></div>
+                                    <div class="card-title">Real Estate Assets</div>
+                                </div>
+                                <span class="card-tag">PORTFOLIO</span>
+                            </div>
+                            <div class="filter-pills">
+                                <button class="pill-btn active" onclick="switchRealEstateTab(this, 'all')">All</button>
+                                <button class="pill-btn" onclick="switchRealEstateTab(this, 'commercial')">Commercial</button>
+                                <button class="pill-btn" onclick="switchRealEstateTab(this, 'residential')">Residential</button>
+                                <button class="pill-btn" onclick="switchRealEstateTab(this, 'land')">Land</button>
+                            </div>
+                            <div id="realestate-display-text" style="font-size: 12px; color: var(--text-color); margin-top: 4px;">
+                                Showing all 42 registered prime real estate assets.
+                            </div>
+                            <button class="action-btn-primary" onclick="openSectorDetails('Real Estate Portfolio')">
+                                Browse Assets <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+
+                        <!-- FARMING CARD -->
+                        <div class="industry-card" data-sector="farming">
+                            <div class="card-header-row">
+                                <div class="card-title-group">
+                                    <div class="card-icon farming-icon"><i class="fas fa-wheat-awn"></i></div>
+                                    <div class="card-title">Agri Farming Matrix</div>
+                                </div>
+                                <span class="card-tag">MONITORED</span>
+                            </div>
+                            <p style="font-size: 12px; color: var(--text-muted);">Organic zones, hydration indexes, and harvest timelines.</p>
+                            <div class="metrics-grid">
+                                <div class="metric-box">
+                                    <div class="metric-label">Soil Hydration</div>
+                                    <div class="metric-value" style="color:#2ea44f;">74% Optimal</div>
+                                </div>
+                                <div class="metric-box">
+                                    <div class="metric-label">Harvest Due</div>
+                                    <div class="metric-value">18 Days</div>
+                                </div>
+                            </div>
+                            <button class="action-btn-primary" onclick="openSectorDetails('Agri-Farming Systems')">
+                                Check Telemetry <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+
+                        <!-- RESTAURANTS CARD -->
+                        <div class="industry-card" data-sector="restaurants">
+                            <div class="card-header-row">
+                                <div class="card-title-group">
+                                    <div class="card-icon restaurant-icon"><i class="fas fa-utensils"></i></div>
+                                    <div class="card-title">Hospitality & Dining</div>
+                                </div>
+                                <span class="card-tag">BOOKINGS</span>
+                            </div>
+                            <p style="font-size: 12px; color: var(--text-muted);">Manage executive dining reservations and luxury venues.</p>
+                            <button class="action-btn-primary" style="background:#28a745;" onclick="reserveTablePrompt()">
+                                <i class="fas fa-calendar-check"></i> Reserve Dining Table
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Sub-Page: Detail Screen -->
+                <div id="home-detail-page" class="sub-page">
+                    <div class="cards-container" style="margin-top: 80px;">
+                        <div class="industry-card">
+                            <h2 id="detail-title" style="font-size: 20px; color: var(--text-color); margin-bottom: 8px;">Sector Detail</h2>
+                            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px;">
+                                Telemetry data, access logs, and core control parameters for this branch.
+                            </p>
+                            <button class="action-btn-primary" id="back-to-hub-btn" style="background: var(--pill-bg); color: var(--text-color);">
+                                <i class="fas fa-chevron-left"></i> Return to Main Hub
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW 2: GEMINI AI SCRIPT INTERFACE (Replaces Explore) -->
+            <section id="gemini-view" class="app-view">
+                <div class="gemini-container">
+                    
+                    <div class="gemini-header">
+                        <i class="fas fa-wand-magic-sparkles gemini-sparkle-icon"></i>
+                        <div>
+                            <div style="font-weight: 700; font-size: 14px; color: var(--text-color);">Gemini Intelligence</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Ecosystem AI Operational Assistant</div>
+                        </div>
+                    </div>
+
+                    <!-- Preset Chips -->
+                    <div class="preset-chips">
+                        <button class="chip-btn" onclick="sendPresetQuery('Summarize VishVeda Mining yield')">⛏️ Mining Yield</button>
+                        <button class="chip-btn" onclick="sendPresetQuery('Check Real Estate properties')">🏢 Real Estate</button>
+                        <button class="chip-btn" onclick="sendPresetQuery('What is the Agri harvest status?')">🌾 Agri Harvest</button>
+                    </div>
+
+                    <!-- Chat Box Container -->
+                    <div class="gemini-chat-box" id="geminiChatBox">
+                        <div class="chat-bubble gemini">
+                            Hello! I am your <strong>Gemini AI Assistant</strong>. How can I assist you with VishVeda Group's operations today?
+                        </div>
+                    </div>
+
+                    <!-- Input Wrapper -->
+                    <div class="gemini-input-wrapper">
+                        <input type="text" id="geminiInput" class="gemini-input" placeholder="Ask Gemini AI anything..." onkeydown="handleGeminiKey(event)">
+                        <button class="gemini-send-btn" id="geminiSendBtn" onclick="submitGeminiQuery()">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- VIEW 3: PROFILE CONTROLLER -->
+            <section id="profile-view" class="app-view">
+                <div class="cards-container" style="margin-top: 80px;">
+                    <div class="industry-card">
+                        <h2 style="font-size: 18px; color: var(--text-color); margin-bottom: 8px;"><i class="fas fa-user-gear" style="color:#007bff;"></i> User Profile & Auth</h2>
+                        <p style="font-size: 13px; color: var(--text-muted);">Review authorization status, JWT credentials, and active theme preferences.</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- ==========================================
+           4. FIXED BOTTOM NAVIGATION BAR
+           ========================================== -->
+        <nav class="app-nav">
+            <div class="nav-item active" data-target="home-view">
+                <i class="fas fa-house"></i>
+                <span>Home</span>
+            </div>
+            <!-- Gemini AI Tab replacing Explore -->
+            <div class="nav-item" data-target="gemini-view">
+                <i class="fas fa-wand-magic-sparkles"></i>
+                <span>AI</span>
+            </div>
+            <div class="nav-item" data-target="profile-view">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </div>
+            <div class="nav-item">
+                <!-- Theme Mode Switcher -->
+                <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle Light/Dark Mode">
+                    <i class="fas fa-sun" id="themeIcon"></i>
+                </button>
+            </div>
+        </nav>
+
+    </div>
+
+    <!-- ==========================================
+       5. INTERACTION LOGIC & SCRIPT ENGINE
+       ========================================== -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            
+            // 1. Splash Screen Timer
+            const splashScreen = document.getElementById('app-splash-screen');
+            if (splashScreen) {
+                setTimeout(() => {
+                    splashScreen.classList.add('fade-out');
+                    setTimeout(() => { splashScreen.remove(); }, 400);
+                }, 1600);
+            }
+
+            // 2. Light / Dark Theme Toggle Handler (#bacaf0 vs #000000)
+            const htmlNode = document.documentElement;
+            const themeBtn = document.getElementById('themeToggleBtn');
+            const themeIcon = document.getElementById('themeIcon');
+
+            function applyTheme(theme) {
+                htmlNode.setAttribute('data-theme', theme);
+                localStorage.setItem('app_theme', theme);
+
+                if (theme === 'light') {
+                    themeIcon.className = 'fas fa-moon';
+                } else {
+                    themeIcon.className = 'fas fa-sun';
+                }
+            }
+
+            // Initialize saved or default theme
+            const savedTheme = localStorage.getItem('app_theme') || 'dark';
+            applyTheme(savedTheme);
+
+            themeBtn.addEventListener('click', () => {
+                const currentTheme = htmlNode.getAttribute('data-theme');
+                const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                applyTheme(nextTheme);
+            });
+
+            // 3. Search Bar Functionality
+            const container = document.querySelector('.search-container');
+            const button = document.getElementById('searchBtn');
+            const input = document.getElementById('appSearchInput');
+            const cards = document.querySelectorAll('.industry-card');
+
+            if (container && button && input) {
+                button.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    container.classList.add('active');
+                    setTimeout(() => { input.focus(); }, 100);
+                });
+
+                input.addEventListener('input', function() {
+                    const query = input.value.toLowerCase().trim();
+                    cards.forEach(card => {
+                        const text = card.textContent.toLowerCase();
+                        card.style.display = text.includes(query) ? "block" : "none";
+                    });
+                });
+
+                document.addEventListener('click', function(e) {
+                    if (!container.contains(e.target) && container.classList.contains('active')) {
+                        input.value = "";
+                        cards.forEach(card => card.style.display = "block");
+                        container.classList.remove('active');
+                        input.blur();
+                    }
+                });
+            }
+
+            // 4. Tab Navigation Switching
+            const navItems = document.querySelectorAll('.nav-item');
+            const appViews = document.querySelectorAll('.app-view');
+
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    if (item.classList.contains('active') || !item.hasAttribute('data-target')) return;
+                    
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    appViews.forEach(view => view.classList.remove('active'));
+                    
+                    item.classList.add('active');
+                    const targetView = document.getElementById(item.getAttribute('data-target'));
+                    if (targetView) targetView.classList.add('active');
+                });
+            });
+
+            // 5. Sector Details Navigation
+            const hubPage = document.getElementById('home-hub-page');
+            const detailPage = document.getElementById('home-detail-page');
+            const backToHubBtn = document.getElementById('back-to-hub-btn');
+
+            window.openSectorDetails = function(sectorTitle) {
+                document.getElementById('detail-title').textContent = sectorTitle;
+                hubPage.classList.remove('active');
+                detailPage.classList.add('active');
+            };
+
+            if (backToHubBtn) {
+                backToHubBtn.addEventListener('click', () => {
+                    detailPage.classList.remove('active');
+                    hubPage.classList.add('active');
+                });
+            }
+
+            // 6. Real Estate Tab Switcher
+            window.switchRealEstateTab = function(btn, category) {
+                const pills = btn.parentElement.querySelectorAll('.pill-btn');
+                pills.forEach(p => p.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const textElem = document.getElementById('realestate-display-text');
+                if (category === 'all') textElem.textContent = "Showing all 42 registered prime real estate assets.";
+                if (category === 'commercial') textElem.textContent = "Displaying 18 commercial towers and logistics hubs.";
+                if (category === 'residential') textElem.textContent = "Displaying 14 luxury residential projects.";
+                if (category === 'land') textElem.textContent = "Displaying 10 industrial plots and land banks.";
+            };
+
+            // 7. Restaurant Reservation Prompt
+            window.reserveTablePrompt = function() {
+                if (confirm("Would you like to reserve a dining table at VishVeda Hospitality?")) {
+                    alert("Reservation Request Transmitted! Confirmation pending.");
+                }
+            };
+
+            // ==========================================
+            // 8. GEMINI AI CHAT ENGINE INTEGRATION SCRIPT
+            // ==========================================
+            const chatBox = document.getElementById('geminiChatBox');
+            const geminiInput = document.getElementById('geminiInput');
+
+            window.handleGeminiKey = function(e) {
+                if (e.key === 'Enter') submitGeminiQuery();
+            };
+
+            window.sendPresetQuery = function(text) {
+                geminiInput.value = text;
+                submitGeminiQuery();
+            };
+
+            window.submitGeminiQuery = function() {
+                const query = geminiInput.value.trim();
+                if (!query) return;
+
+                // Render User Bubble
+                appendChatBubble(query, 'user');
+                geminiInput.value = '';
+
+                // Render Loading Animation
+                const loadingBubble = appendLoadingBubble();
+
+                // Generate AI Response Simulation
+                setTimeout(() => {
+                    loadingBubble.remove();
+                    const aiResponse = generateGeminiResponse(query);
+                    appendChatBubble(aiResponse, 'gemini');
+                }, 1100);
+            };
+
+            function appendChatBubble(text, sender) {
+                const bubble = document.createElement('div');
+                bubble.className = `chat-bubble ${sender}`;
+                bubble.innerHTML = text;
+                chatBox.appendChild(bubble);
+                chatBox.scrollTop = chatBox.scrollHeight;
+                return bubble;
+            }
+
+            function appendLoadingBubble() {
+                const bubble = document.createElement('div');
+                bubble.className = 'chat-bubble gemini loading';
+                bubble.innerHTML = `
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                `;
+                chatBox.appendChild(bubble);
+                chatBox.scrollTop = chatBox.scrollHeight;
+                return bubble;
+            }
+
+            function generateGeminiResponse(prompt) {
+                const lower = prompt.toLowerCase();
+
+                if (lower.includes('mining') || lower.includes('yield')) {
+                    return "<strong>Gemini Report:</strong> Mining extraction is currently at <strong>14,250 MT</strong> daily yield with 98.4% equipment uptime across all sites.";
+                } else if (lower.includes('real estate') || lower.includes('property')) {
+                    return "<strong>Gemini Report:</strong> VishVeda manages <strong>42 active assets</strong> across commercial towers, residential spaces, and industrial land banks.";
+                } else if (lower.includes('agri') || lower.includes('farm') || lower.includes('harvest')) {
+                    return "<strong>Gemini Report:</strong> Soil moisture is currently <strong>74% (Optimal)</strong>. The primary crop cycle harvest is scheduled in <strong>18 days</strong>.";
+                } else if (lower.includes('hello') || lower.includes('hi')) {
+                    return "Greetings! How can I assist you with VishVeda Group's multi-sector industrial platform today?";
+                } else {
+                    return `<strong>Gemini Intelligence:</strong> I have logged your request regarding <em>"${prompt}"</em>. Operational nodes are operating within optimal metrics.`;
+                }
+            }
+
+            // ==========================================
+            // 9. GOOGLE IDENTITY SERVICES AUTH
+            // ==========================================
+            const clientID = 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
+            const dropdown = document.getElementById('dropdown');
+            const dropdownToggle = document.getElementById('dropdownToggle');
+            const dropdownMenu = document.getElementById('dropdownMenu');
+
+            window.decodeJWT = function(token) {
+                const base64Url = token.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const jsonPayload = decodeURIComponent(atob(base64).split('').map(c =>
+                    '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+                ).join(''));
+                return JSON.parse(jsonPayload);
+            };
+
+            window.handleCredentialResponse = function(response) {
+                const user = decodeJWT(response.credential);
+                localStorage.setItem('google_jwt_token', response.credential);
+                updateUIToSignedIn(user);
+            };
+
+            function updateUIToSignedIn(user) {
+                if (!dropdownToggle || !dropdownMenu) return;
+
+                dropdownToggle.style.padding = "0";
+                dropdownToggle.style.backgroundColor = "transparent";
+                dropdownToggle.style.border = "none";
+                dropdownToggle.innerHTML = `<img src="${user.picture}" alt="user" style="width: 38px; height: 38px; border-radius: 50%; border: 2px solid #007bff; object-fit: cover;">`;
+
+                dropdownMenu.innerHTML = `
+                    <div class="profile-info">
+                        <img src="${user.picture}" alt="Profile Picture">
+                        <span class="profile-name">Welcome, ${user.name.split(' ')[0]}</span>
+                        <small>${user.email}</small>
+                    </div>
+                    <button class="dropdown-item" id="logoutBtn">
+                        <i class="fas fa-arrow-right-from-bracket"></i> Log Out
+                    </button>
+                `;
+
+                document.getElementById('logoutBtn').addEventListener('click', () => {
+                    localStorage.removeItem('google_jwt_token');
+                    resetUIToSignedOut();
+                });
+            }
+
+            function resetUIToSignedOut() {
+                if (!dropdownToggle || !dropdownMenu) return;
+
+                dropdownToggle.textContent = 'Sign In';
+                dropdownToggle.style.backgroundColor = "var(--input-bg)";
+                dropdownToggle.style.padding = "0 12px";
+                dropdownMenu.innerHTML = `<div id="g_id_signin"></div>`;
+
+                if (window.google && google.accounts) {
+                    google.accounts.id.initialize({
+                        client_id: clientID,
+                        callback: handleCredentialResponse,
+                        ux_mode: 'popup',
+                    });
+                    
+                    google.accounts.id.renderButton(document.getElementById("g_id_signin"), {
+                        theme: "outline", 
+                        size: "large", 
+                        width: "100%",
+                    });
+                }
+            }
+
+            if (dropdownToggle && dropdown) {
+                dropdownToggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    dropdown.classList.toggle('show');
+                });
+            }
+
+            document.addEventListener('click', (e) => {
+                if (dropdown && !dropdown.contains(e.target)) { 
+                    dropdown.classList.remove('show'); 
+                }
+            });
+
+            const token = localStorage.getItem('google_jwt_token');
+            if (token) {
+                try {
+                    const user = decodeJWT(token);
+                    updateUIToSignedIn(user);
+                } catch (e) {
+                    localStorage.removeItem('google_jwt_token');
+                    resetUIToSignedOut();
+                }
+            } else {
+                setTimeout(() => { resetUIToSignedOut(); }, 250);
+            }
+        });
+    </script>
+</body>
+</html>

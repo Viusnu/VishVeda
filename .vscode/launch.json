@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:VishVeda}/MyMacApp",
+            "name": "Debug MyMacApp (MyMacApp)",
+            "target": "MyMacApp",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug MyMacApp (MyMacApp)"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:VishVeda}/MyMacApp",
+            "name": "Release MyMacApp (MyMacApp)",
+            "target": "MyMacApp",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release MyMacApp (MyMacApp)"
+        }
+    ]
+}
