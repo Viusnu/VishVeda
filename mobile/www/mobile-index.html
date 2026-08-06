@@ -141,24 +141,64 @@
         }
 
         /* --- UPPER NAVBAR --- */
-        .app-header {
-            height: 68px;
-            background: var(--header-bg);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border-bottom: 1px solid var(--card-border);
-            padding: 0 12px;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 2000;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-            gap: 6px;
-            transition: background 0.3s ease, border-color 0.3s ease;
-        }
+    /* Base Reset */
+
+/* 1. Main Wrapper (Using your exact styles, adjusted only for height/direction) */
+.app-header {
+    background: var(--header-bg);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    padding: 0 12px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2000;
+    transition: background 0.3s ease, border-color 0.3s ease;
+    
+    /* Stacks row 1 and row 2 vertically */
+    display: flex;
+    flex-direction: column;
+    height: auto; /* Lets it grow based on row heights */
+    padding-bottom: 8px;
+}
+
+/* 2. Top Row (Handles horizontal layout for Sign In & Search) */
+.header-main-row {
+    width: 100%;
+    height: 68px; /* Your original height used for this row */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between; /* Pushes Sign In left and Search right */
+    gap: 6px;
+}
+
+/* 3. Bottom Row (Handles horizontal navigation links) */
+.header-nav-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 13px;
+    margin-top: 7px; /* Optional alignment tweak */
+}
+
+.header-nav-row ul {
+    list-style: none;
+    display: flex;
+    gap: 16px;
+}
+
+.header-nav-row a {
+    color: inherit;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+/* 4. Spacer (Matches total header height so content doesn't tuck under) */
+.header-spacer {
+    height: 110px; 
+}
+
 
         .app-brand-title {
             font-weight: 800;
@@ -694,22 +734,27 @@
         }
 
         /* --- STICKY FLOATING NAVIGATION BAR --- */
-        .app-nav {
-            position: fixed; 
-            bottom: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 65px;
-            background-color: var(--nav-bg); 
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px); 
-            border-top: 1px solid var(--card-border);
-            display: flex; 
-            justify-content: space-around; 
-            align-items: center; 
-            z-index: 2000;
-            transition: background 0.3s ease;
-        }
+     .app-nav {
+    position: fixed; 
+    bottom: 20px; /* Lifts it off the bottom edge */
+    left: 50%; /* Moves it to the horizontal center */
+    transform: translateX(-50%); /* Perfectly centers the floating bar */
+    width: 90%; /* Leaves space on the sides */
+    max-width: 400px; /* Optional: keeps it from getting too wide on desktop */
+    border-radius: 20px; /* Makes it fully rounded/pill-shaped */
+    height: 65px;
+    background-color: var(--nav-bg); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px); 
+    border: 1px solid var(--card-border); /* Changed from border-top to full border */
+    display: flex; 
+    justify-content: space-around; 
+    align-items: center; 
+    z-index: 2000;
+    transition: all 0.3s ease; /* Smooths out potential layout shifts */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15); /* Adds depth to emphasize floating effect */
+}
+
 
         .nav-item {
             display: flex; 
@@ -727,8 +772,9 @@
         }
 
         .nav-item i { font-size: 18px; transition: transform 0.2s ease; }
-        .nav-item.active { color: #007bff; }
-        .nav-item.active i { transform: scale(1.15); }
+        .nav-item.active { color: rgb(93, 81, 197);
+                           background: rgba(93, 81, 197, 0.08);
+                           border-radius: 20px; }
 
         .theme-toggle-btn {
     display: flex;
@@ -755,9 +801,8 @@
 
 /* Optional: add active or hover state styles if needed */
 .theme-toggle-btn:hover {
-    color: #007bff;
+    color: rgb(93, 81, 197);
 }
-
     </style>
 </head>
 <body>
@@ -775,25 +820,36 @@
     </div>
 
     <!-- MAIN APP STRUCTURE CONTAINER -->
-    <div class="app-container">
+    <header class="app-header">
+    <!-- Row 1: Sign In & Search -->
+    <div class="header-main-row">
+        <div class="dropdown" id="dropdown">
+            <button id="dropdownToggle" class="dropdown-toggle">Sign In</button>
+            <div id="dropdownMenu" class="dropdown-menu">
+                <div id="g_id_signin"></div>
+            </div>
+        </div>
         
-        <!-- ==========================================
-           2. UPPER NAVBAR
-           ========================================== -->
-        <header class="app-header">
-            <div class="dropdown" id="dropdown">
-                <button id="dropdownToggle" class="dropdown-toggle">Sign In</button>
-                <div id="dropdownMenu" class="dropdown-menu">
-                    <div id="g_id_signin"></div>
-                </div>
-            </div>
+        <div class="search-container">
+            <input type="text" id="appSearchInput" placeholder="Search..." class="search-input">
+            <button class="search-button" id="searchBtn"><i class="fas fa-search"></i></button>
+        </div>
+    </div>
 
-            <!-- Search Container -->
-            <div class="search-container">
-                <input type="text" id="appSearchInput" placeholder="Search..." class="search-input">
-                <button class="search-button" id="searchBtn"><i class="fas fa-search"></i></button>
-            </div>
-        </header>
+    <!-- Row 2: Links -->
+    <nav class="header-nav-row">
+        <ul>
+            <li><a href="#">Real Estate</a></li>
+            <li><a href="#">Mining</a></li>
+            <li><a href="#">Farming</a></li>
+            <li><a href="#">Agriculture</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="header-spacer"></div>
+
+
 
         <!-- ==========================================
            3. MAIN SCROLLABLE APP CONTENT INTERFACE
@@ -994,6 +1050,7 @@
                 <!-- Theme Mode Switcher -->
                 <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle Light/Dark Mode">
                     <i class="fas fa-sun" id="themeIcon"></i>
+                    <span>Dark Mode</span>
                 </button>
             </div>
         </nav>
@@ -1019,6 +1076,7 @@
             const htmlNode = document.documentElement;
             const themeBtn = document.getElementById('themeToggleBtn');
             const themeIcon = document.getElementById('themeIcon');
+            const themeLabel = themeBtn.querySelector('span');
 
             function applyTheme(theme) {
                 htmlNode.setAttribute('data-theme', theme);
@@ -1026,8 +1084,10 @@
 
                 if (theme === 'light') {
                     themeIcon.className = 'fas fa-moon';
+                    themeLabel.textContent = 'Light Mode';
                 } else {
                     themeIcon.className = 'fas fa-sun';
+                    themeLabel.textContent = 'Dark Mode';
                 }
             }
 
