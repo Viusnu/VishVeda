@@ -1,0 +1,584 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+  --color-accent: rgb(93 81 197);
+    --color-accent-hover: rgba(93 81 197 0.52);
+    --color-border: rgb(255 255 255 / 78%);
+    --color-border-hover: rgb(255 255 255 / 96%);
+    --color-focus: rgb(93 81 197 / 20%);
+    --color-bg-hover: rgb(93 81 197 / 9%);
+    --color-glass: rgb(255 255 255 / 38%);
+    --color-glass-highlight: rgb(255 255 255 / 72%);
+    --color-glass-edge: rgb(93 81 197 / 10%);
+  --radius-control: 999px;
+  --transition-fast: 180ms ease;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #bacaf0;
+    color: #333;
+}
+
+.navbar {
+    position: relative;
+    background-color: #e2e4e6;
+    color: rgb(93, 81, 197);
+    padding: 1rem;
+    height: 62px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.sidebar-toggle {
+    display: grid;
+    width: 2.75rem;
+    aspect-ratio: 1;
+    flex: 0 0 auto;
+    place-items: center;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    background: var(--color-glass);
+    color: var(--color-accent);
+    cursor: pointer;
+}
+
+.sidebar-toggle:focus-visible,
+.sidebar-backdrop:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family: 'Offside', cursive;
+    padding-left: 0.5rem;
+    flex: 0 0 auto;
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-left: auto;
+}
+
+/* --- Redesigned Account Menu / Dropdown --- */
+
+.account-menu {
+    position: relative;
+    z-index: 3;
+}
+
+.account-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    min-width: 2.75rem;
+    height: 2.75rem;
+    padding: 0 0.6rem 0 0.4rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background-color: var(--color-glass);
+    color: var(--color-accent);
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: all var(--transition-fast);
+}
+
+.account-toggle:hover {
+    border-color: var(--color-border-hover);
+    background-color: rgb(255 255 255 / 65%);
+    box-shadow: 0 4px 12px rgb(93 81 197 / 10%);
+}
+
+.account-toggle:focus-visible,
+.google-signin:focus-visible,
+.account-signout:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+.account-icon {
+    font-size: 1.35rem;
+}
+
+.account-chevron {
+    font-size: 1rem;
+    transition: transform var(--transition-fast);
+}
+
+/* Optional: rotate chevron if you toggle an 'is-open' state on the menu */
+.account-menu.is-open .account-chevron {
+    transform: rotate(180deg);
+}
+
+.account-avatar {
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Dropdown Container */
+.account-popover {
+    position: absolute;
+    top: calc(100% + 0.85rem);
+    right: 0;
+    z-index: 5;
+    width: min(23rem, calc(100vw - 2rem));
+    padding: 1.25rem;
+    border: 1px solid rgb(255 255 255 / 80%);
+    border-radius: 1rem;
+    background-color: rgb(255 255 255 / 90%);
+    backdrop-filter: blur(16px);
+    color: #302c49;
+    box-shadow: 0 20px 45px rgb(36 35 55 / 14%), 0 4px 12px rgb(36 35 55 / 6%);
+    animation: account-enter var(--transition-fast) both;
+}
+
+.account-popover[hidden],
+.account-user[hidden],
+.account-avatar[hidden],
+.account-icon[hidden],
+.account-profile-avatar-fallback[hidden],
+.google-signin[hidden],
+.account-signout[hidden] {
+    display: none !important;
+}
+
+.account-heading {
+    margin-bottom: 0.75rem;
+    color: #8c889f;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+/* User Card inside Dropdown */
+.account-user {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-bottom: 1rem;
+    padding: 0.85rem;
+    border: 1px solid rgb(231 230 237 / 80%);
+    border-radius: 0.75rem;
+    background-color: rgb(247 247 250 / 60%);
+}
+
+.account-profile-avatar {
+    width: 3rem;
+    height: 3rem;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 2px 6px rgb(36 35 55 / 10%);
+}
+
+.account-profile-avatar-fallback.material-symbols-outlined {
+    display: grid;
+    width: 3rem;
+    height: 3rem;
+    flex: 0 0 auto;
+    place-items: center;
+    border-radius: 50%;
+    background-color: var(--color-bg-hover);
+    color: var(--color-accent);
+    font-size: 1.5rem;
+}
+
+.account-user-details {
+    min-width: 0;
+}
+
+.account-name,
+.account-email {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.account-name {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #26223b;
+}
+
+.account-email {
+    margin-top: 0.15rem;
+    color: #69657a;
+    font-size: 0.78rem;
+}
+
+/* Action Buttons (Google Sign In / Sign Out) */
+.google-signin,
+.account-signout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    width: 100%;
+    min-height: 2.85rem;
+    padding: 0.6rem 0.85rem;
+    border: 1px solid #dedfea;
+    border-radius: 0.75rem;
+    background-color: #fff;
+    color: #302c49;
+    font: inherit;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgb(36 35 55 / 4%);
+    transition: all var(--transition-fast);
+}
+
+.google-signin:hover,
+.account-signout:hover {
+    border-color: var(--color-accent);
+    background-color: #f6f5fb;
+    box-shadow: 0 4px 12px rgb(93 81 197 / 12%);
+    transform: translateY(-1px);
+}
+
+.google-signin:active,
+.account-signout:active {
+    transform: translateY(0);
+}
+
+/* Status Alert Box */
+.account-status {
+    margin-top: 0.85rem;
+    padding: 0.65rem 0.75rem;
+    border-left: 3px solid var(--color-accent);
+    border-radius: 0 0.5rem 0.5rem 0;
+    background-color: rgb(245 244 250 / 80%);
+    color: #69657a;
+    font-size: 0.78rem;
+    line-height: 1.4;
+}
+
+.account-status:empty {
+    display: none;
+}
+
+@keyframes account-enter {
+    from {
+        opacity: 0;
+        transform: translateY(-0.5rem) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.account-popover button:disabled {
+    cursor: wait;
+    opacity: 0.65;
+}
+
+.search-toggle {
+    width: 2.75rem;
+    aspect-ratio: 1;
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: var(--color-accent);
+    color: white;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.search-toggle:active {
+    transform: scale(0.95);
+}
+
+.search-toggle:focus-visible {
+    background-color: var(--color-accent-hover);
+    color: var(--color-accent);
+}
+
+.search-toggle .material-symbols-outlined {
+    font-size: 1.5rem;
+}
+
+.search-form {
+    position: absolute;
+    top: 50%;
+    right: calc(1rem + 8.5rem);
+    z-index: 2;
+    display: flex;
+    width: min(400px, calc(100vw - 11.5rem));
+    min-width: 0;
+    height: 45px;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 0.35rem 0.45rem 0.35rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 30px;
+    background-color: rgb(255 255 255 / 88%);
+    box-shadow: inset 0 1px 0 white, 0 0 0 1px var(--color-glass-edge);
+    transform: translateY(-50%);
+    animation: search-enter var(--transition-fast) both;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.search-form:hover {
+    border-color: white;
+}
+
+.site-layout {
+    display: block;
+    min-height: calc(100vh - 62px);
+}
+
+.site-sidebar {
+    position: fixed;
+    top: 62px;
+    right: 0;
+    bottom: 0;
+    z-index: 7;
+    width: min(18rem, calc(100vw - 3.5rem));
+    overflow-y: auto;
+    padding: 1.5rem 0.8rem;
+    border-left: 1px solid rgb(93 81 197 / 12%);
+    background-color: #f6f5fb;
+    box-shadow: -0.8rem 0 2rem rgb(48 44 73 / 12%);
+    transform: translateX(105%);
+    transition: transform var(--transition-fast);
+}
+
+.site-sidebar.is-open {
+    transform: translateX(0);
+}
+
+.site-sidebar[hidden],
+.sidebar-backdrop[hidden] {
+    display: none !important;
+}
+
+body.sidebar-open {
+    overflow: hidden;
+}
+
+.sidebar-heading {
+    padding: 0 0.7rem;
+    color: #69657a;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.sidebar-heading-spaced {
+    margin-top: 1.6rem;
+}
+
+.sidebar-links {
+    display: grid;
+    gap: 0.2rem;
+    margin-top: 0.55rem;
+}
+
+.sidebar-links a {
+    display: flex;
+    min-height: 2.65rem;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.7rem;
+    border-radius: 0.55rem;
+    color: #403c55;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.sidebar-links a:hover,
+.sidebar-links a:focus-visible {
+    background-color: rgb(93 81 197 / 9%);
+    color: var(--color-accent);
+    outline: none;
+}
+
+.sidebar-links a[aria-current="page"] {
+    background-color: rgb(93 81 197 / 12%);
+    color: var(--color-accent);
+    font-weight: 700;
+}
+
+.sidebar-links .material-symbols-outlined {
+    font-size: 1.2rem;
+}
+
+.main-content {
+    min-width: 0;
+    padding: clamp(1.5rem, 4vw, 3.5rem);
+}
+
+.page-back {
+    margin: 0 0 1rem 0.5rem;
+    padding: 0.5rem 0.9rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-control);
+    background-color: var(--color-glass);
+    color: var(--color-accent);
+    font: inherit;
+    cursor: pointer;
+}
+
+.page-back:hover,
+.page-back:focus-visible {
+    border-color: var(--color-border-hover);
+    background-color: var(--color-accent-hover);
+}
+
+.page-panel {
+    display: none;
+    min-height: 15rem;
+    padding: 0.5rem;
+}
+
+.page-panel#overview,
+.page-panel:target {
+    display: block;
+}
+
+.site-layout:has(.page-panel:target) #overview:not(:target) {
+    display: none;
+}
+
+.page-kicker {
+    margin-bottom: 0.75rem;
+    color: var(--color-accent);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.page-panel h1 {
+    color: #302c49;
+    font-size: 2rem;
+}
+
+.sidebar-backdrop {
+    position: fixed;
+    inset: 62px 0 0;
+    z-index: 6;
+    display: block;
+    width: 100%;
+    border: 0;
+    background-color: rgb(27 25 39 / 28%);
+    cursor: default;
+}
+
+.search-form[hidden],
+.search-toggle[hidden] {
+    display: none !important;
+}
+
+.search-form input {
+    flex: 1;
+    min-width: 0;
+    padding: 0.25rem 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: #302c49;
+    font: inherit;
+}
+
+.search-form input::placeholder {
+    color: rgb(48 44 73 / 58%);
+    opacity: 1;
+}
+
+.search-close {
+    display: grid;
+    place-items: center;
+    width: 2.4rem;
+    aspect-ratio: 1;
+    flex: 0 0 auto;
+    border: 0;
+    border-radius: 50%;
+    background-color: transparent;
+    color: inherit;
+    cursor: pointer;
+    transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+}
+
+.search-close:hover {
+    background-color: var(--color-bg-hover);
+    color: var(--color-accent);
+}
+
+.search-close:active {
+    transform: scale(0.94);
+}
+
+.search-close:focus-visible {
+    outline: 1px solid var(--color-accent);
+}
+
+.search-close .material-symbols-outlined {
+    font-size: 1.4rem;
+}
+
+@media (max-width: 42rem) {
+    .navbar {
+        justify-content: flex-start;
+        gap: 0.65rem;
+    }
+
+    .logo {
+        font-size: 1.25rem;
+    }
+
+    .site-layout {
+        display: block;
+    }
+
+    .site-sidebar {
+        width: min(17rem, calc(100vw - 3.5rem));
+    }
+
+    .main-content {
+        padding: 1.5rem 1rem;
+    }
+
+    .navbar:has(.search-form:not([hidden])) .logo {
+        visibility: hidden;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}
+
+@keyframes search-enter {
+    from {
+        opacity: 0;
+        transform: translate(0.65rem, -50%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(0, -50%);
+    }
+}
